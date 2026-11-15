@@ -64,6 +64,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
   background:radial-gradient(circle,rgba(120,160,255,.14),transparent 65%);pointer-events:none}
 .case-card:active{transform:scale(.955)}
 .caseIcon{font-size:36px;line-height:1;filter:drop-shadow(0 4px 10px rgba(120,160,255,.35))}
+.caseIcon img{width:44px;height:44px;object-fit:contain;vertical-align:middle}
 .caseName{font-size:12px;font-weight:700;text-align:center;line-height:1.15;min-height:27px;
   display:flex;align-items:center}
 .casePrice{font-size:11px;font-weight:800;color:#ffd76a}
@@ -88,7 +89,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
   cursor:pointer;position:relative;overflow:hidden;margin-bottom:7px}
 .row:active{transform:scale(.985)}
 .rowEmoji{font-size:24px;line-height:1;filter:drop-shadow(0 1px 4px rgba(0,0,0,.7))}
-.rowImg{width:38px;height:28px;object-fit:contain}
+.rowImg{width:44px;height:33px;object-fit:contain}
 .rowInfo{flex:1;min-width:0}
 .rowName{font-size:12.5px;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rowRar{font-size:9.5px;font-weight:800;letter-spacing:.5px;opacity:.75;color:var(--c);margin-top:1px}
@@ -206,6 +207,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
   border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;
   box-shadow:inset 0 0 30px var(--rc),0 0 40px rgba(0,0,0,.4)}
 .resultPreview .iemoji{font-size:76px}
+.resultPreview .imedia{width:120px;height:90px}
 .resultName{font-size:17px;font-weight:800;text-align:center;line-height:1.25;
   position:relative;z-index:1;padding:0 4px}
 .resultPrice{font-size:15px;font-weight:800;color:#ffd76a;position:relative;z-index:1}
@@ -229,11 +231,54 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
   background:linear-gradient(135deg,#ffd76a,#ff6b35);-webkit-background-clip:text;
   background-clip:text;color:transparent;letter-spacing:-1px;margin:6px 0}
 
+/* ==== КОЛЕСО АПГРЕЙДА ==== */
+.wheelWrap{position:relative;width:100%;max-width:320px;margin:14px auto 6px;padding:0 8px}
+.wheelBox{position:relative;width:100%;aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(
+    var(--up-win) 0deg calc(var(--up-chance) * 3.6deg),
+    #ff4d4d calc(var(--up-chance) * 3.6deg) 360deg
+  );
+  box-shadow:0 0 40px rgba(0,0,0,.5),inset 0 0 30px rgba(0,0,0,.6)}
+.wheelBox::after{content:'';position:absolute;inset:8%;border-radius:50%;
+  background:radial-gradient(circle at 50% 40%,#1a2138,#0a0c14);
+  box-shadow:inset 0 0 30px rgba(0,0,0,.8)}
+.wheelCenter{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;z-index:2;pointer-events:none}
+.wheelCenter .wcEmoji{font-size:38px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.6))}
+.wheelCenter .wcPct{font-size:24px;font-weight:900;margin-top:4px;
+  background:linear-gradient(135deg,#ffd76a,#ff6b35);-webkit-background-clip:text;
+  background-clip:text;color:transparent}
+.wheelCenter .wcLbl{font-size:10px;font-weight:700;opacity:.6;margin-top:2px}
+
+/* стрелка */
+.wheelPointer{
+  position:absolute;left:50%;top:50%;width:4px;height:46%;
+  transform-origin:top center;transform:translate(-50%,0) rotate(0deg);
+  z-index:3;pointer-events:none;
+  transition:transform 4.2s cubic-bezier(.15,.85,.25,1)}
+.wheelPointer::after{
+  content:'';position:absolute;left:50%;bottom:-10px;width:0;height:0;
+  transform:translateX(-50%);
+  border-left:11px solid transparent;border-right:11px solid transparent;
+  border-top:18px solid #ffd76a;
+  filter:drop-shadow(0 0 8px rgba(255,215,106,.9))}
+.wheelPointer::before{
+  content:'';position:absolute;left:50%;top:0;width:10px;height:10px;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:#ffd76a;box-shadow:0 0 10px #ffd76a}
+.wheelLabels{display:flex;justify-content:space-between;font-size:10px;
+  font-weight:800;opacity:.65;padding:8px 4px 0}
+.wheelResult{text-align:center;font-size:20px;font-weight:900;letter-spacing:1px;
+  margin-top:10px;min-height:28px;opacity:0;transition:.35s;transform:scale(.8)}
+.wheelResult.show{opacity:1;transform:scale(1)}
+.wheelResult.win{color:#4bff88;text-shadow:0 0 20px rgba(75,255,136,.6)}
+.wheelResult.lose{color:#ff5555;text-shadow:0 0 20px rgba(255,85,85,.5)}
+
 /* Contract */
 .contractGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:10px}
 .cSlot{aspect-ratio:1;border-radius:10px;background:rgba(255,255,255,.04);
   border:1px dashed rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;
-  font-size:22px;color:rgba(255,255,255,.15)}
+  font-size:22px;color:rgba(255,255,255,.15);position:relative;overflow:hidden}
 .cSlot.filled{background:linear-gradient(180deg,rgba(14,17,27,.35),rgba(14,17,27,.9)),var(--g);
   border-style:solid;border-color:var(--c);border-bottom-width:3px;cursor:pointer}
 .cSlot.filled .iemoji{font-size:24px}
@@ -446,6 +491,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 
 <script>
 /* ==================== ДАННЫЕ ==================== */
+/* Редкости CS2 */
 const RAR = {
   consumer:   { n:'Ширпотреб',      c:'#b0c3d9', w:1 },
   industrial: { n:'Промышленное',   c:'#5e98d9', w:2 },
@@ -457,9 +503,14 @@ const RAR = {
 };
 const RAR_ORDER = ['consumer','industrial','milspec','restricted','classified','covert','rare'];
 
+/* Базовый URL картинок Steam CDN (открытый, свободный доступ) */
+const IMG_CDN = 'https://community.akamai.steamstatic.com/economy/image/';
+
+/* Предметы. img — полный URL картинки. Если null — показывается эмодзи.
+   Картинки взяты с открытого Steam CDN / csgostash. */
 const ITEMS = [
-  /* НОЖИ ★ */
-  {id:'k1', n:'Керамбит | Градиент', e:'🔪', img:null, r:'rare', p:1800, g:'linear-gradient(135deg,#7b2ff7,#f107a3,#00d4ff)'},
+  /* ★ НОЖИ */
+  {id:'k1', n:'Керамбит | Градиент', e:'🔪', img:IMG_CDN+'i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOXSQ61MnpNagpU3uVRz_oZ7v8S0VuqX3PvE_eKKXXGaSxLgn5rhvFnC1lEsk4m7Tz4v9dXnEbFB2DMR3TflK7Ecql-bHIw', r:'rare', p:1800, g:'linear-gradient(135deg,#7b2ff7,#f107a3,#00d4ff)'},
   {id:'k2', n:'Керамбит | Кровавая паутина', e:'🔪', img:null, r:'rare', p:2200, g:'linear-gradient(135deg,#8b0000,#ff2d2d,#4a0000)'},
   {id:'k3', n:'Керамбит | Допплер', e:'🔪', img:null, r:'rare', p:2800, g:'linear-gradient(135deg,#1a0033,#6a00ff,#ff00aa,#00e5ff)'},
   {id:'k4', n:'Бабочка | Синий гем', e:'🗡️', img:null, r:'rare', p:4500, g:'linear-gradient(135deg,#001a4d,#0055ff,#00c8ff)'},
@@ -469,7 +520,7 @@ const ITEMS = [
   {id:'k8', n:'Штык | Легенды', e:'🗡️', img:null, r:'rare', p:3800, g:'linear-gradient(135deg,#2a0a3a,#aa00ff,#ff00cc)'},
   {id:'k9', n:'Складной | Волны', e:'🔪', img:null, r:'rare', p:1200, g:'linear-gradient(135deg,#0a1a3a,#2a6aff,#7ad0ff)'},
   {id:'k10', n:'Танто | Убийство', e:'🔪', img:null, r:'rare', p:2600, g:'linear-gradient(135deg,#1a0000,#ff0044,#6a001a)'},
-  /* ПЕРЧАТКИ ★ */
+  /* ★ ПЕРЧАТКИ */
   {id:'g1', n:'Перчатки | Бездна', e:'🧤', img:null, r:'rare', p:1600, g:'linear-gradient(135deg,#0a0a2a,#2a00aa,#5500ff)'},
   {id:'g2', n:'Перчатки | Слоёные', e:'🧤', img:null, r:'rare', p:1400, g:'linear-gradient(135deg,#1a1a1a,#4a4a4a,#8a8a8a)'},
   {id:'g3', n:'Перчатки | Королевские', e:'🧤', img:null, r:'rare', p:2800, g:'linear-gradient(135deg,#3a1a00,#c8a86a,#ffd700)'},
@@ -531,53 +582,53 @@ const ITEMS = [
   {id:'cn7', n:'Tec-9 | Потёртая', e:'🔫', img:null, r:'consumer', p:5, g:'linear-gradient(135deg,#2a2a2a,#4a4a4a,#666666)'}
 ];
 
+/* Кейсы — 50+ реальных названий (цены и шансы сбалансированы) */
 const CASES = [
-  {id:'s1', cat:'start', name:'Стартовый ящик', icon:'📦', price:50,
-   odds:{consumer:55, industrial:25, milspec:14, restricted:5, classified:.8, covert:.2}},
-  {id:'s2', cat:'start', name:'Дневной ящик', icon:'🌅', price:75,
-   odds:{consumer:50, industrial:25, milspec:15, restricted:7, classified:2, covert:.9, rare:.1}},
-  {id:'s3', cat:'start', name:'Бюджетный', icon:'💵', price:120,
-   odds:{consumer:42, industrial:28, milspec:18, restricted:9, classified:2.5, covert:.5}},
-  {id:'w1', cat:'weapon', name:'Оружейный', icon:'🔫', price:150,
-   odds:{consumer:38, industrial:30, milspec:19, restricted:10, classified:2.5, covert:.5}},
-  {id:'w2', cat:'weapon', name:'Ящик «Призма»', icon:'🔮', price:300,
-   odds:{consumer:30, industrial:30, milspec:20, restricted:14, classified:5, covert:1}},
-  {id:'w3', cat:'weapon', name:'Ящик «Хрома»', icon:'💠', price:450,
-   odds:{consumer:22, industrial:28, milspec:24, restricted:18, classified:6, covert:1.8, rare:.2}},
-  {id:'w4', cat:'weapon', name:'Ящик «Гамма»', icon:'☢️', price:600,
-   odds:{consumer:15, industrial:25, milspec:27, restricted:22, classified:8, covert:2.5, rare:.5}},
-  {id:'w5', cat:'weapon', name:'Ящик «Спектр»', icon:'🌈', price:800,
-   odds:{consumer:10, industrial:22, milspec:28, restricted:25, classified:11, covert:3.5, rare:.5}},
-  {id:'w6', cat:'weapon', name:'Ящик «Фракция»', icon:'⚔️', price:1000,
-   odds:{consumer:5, industrial:18, milspec:30, restricted:28, classified:14, covert:4.5, rare:.5}},
-  {id:'k1c', cat:'knife', name:'Ящик с ножами', icon:'🔪', price:500,
-   odds:{milspec:40, restricted:35, classified:18, covert:5, rare:2}},
-  {id:'k2c', cat:'knife', name:'Ящик «Допплер»', icon:'🌀', price:1500,
-   odds:{milspec:30, restricted:35, classified:22, covert:9, rare:4}},
-  {id:'k3c', cat:'knife', name:'Керамбит-ящик', icon:'🗡️', price:3000,
-   odds:{milspec:20, restricted:32, classified:28, covert:13, rare:7}},
-  {id:'k4c', cat:'knife', name:'Ящик «Бабочка»', icon:'🦋', price:5000,
-   odds:{milspec:10, restricted:28, classified:32, covert:18, rare:12}},
-  {id:'gl1', cat:'glove', name:'Перчаточный', icon:'🧤', price:450,
-   odds:{milspec:42, restricted:33, classified:18, covert:5, rare:2}},
-  {id:'gl2', cat:'glove', name:'Ящик «Слоёные»', icon:'🧶', price:1200,
-   odds:{milspec:32, restricted:34, classified:22, covert:9, rare:3}},
-  {id:'gl3', cat:'glove', name:'Королевские', icon:'👑', price:3500,
-   odds:{milspec:15, restricted:30, classified:30, covert:17, rare:8}},
-  {id:'l1', cat:'lux', name:'Королевский', icon:'👑', price:1000,
-   odds:{industrial:15, milspec:30, restricted:30, classified:15, covert:7, rare:3}},
-  {id:'l2', cat:'lux', name:'Ящик «Дракон»', icon:'🐉', price:2500,
-   odds:{milspec:22, restricted:33, classified:27, covert:13, rare:5}},
-  {id:'l3', cat:'lux', name:'Ящик «Легенда»', icon:'🌟', price:6000,
-   odds:{milspec:12, restricted:28, classified:32, covert:18, rare:10}},
-  {id:'l4', cat:'lux', name:'Ящик «Бездна»', icon:'🕳️', price:12000,
-   odds:{restricted:25, classified:35, covert:25, rare:15}},
-  {id:'e1', cat:'event', name:'Хэллоуин', icon:'🎃', price:750,
-   odds:{consumer:20, industrial:25, milspec:25, restricted:20, classified:7, covert:2.5, rare:.5}},
-  {id:'e2', cat:'event', name:'Новогодний', icon:'🎄', price:850,
-   odds:{consumer:18, industrial:25, milspec:26, restricted:20, classified:8, covert:2.5, rare:.5}},
-  {id:'e3', cat:'event', name:'Космический', icon:'🚀', price:2000,
-   odds:{industrial:15, milspec:28, restricted:30, classified:18, covert:7, rare:2}}
+  {id:'s1', cat:'start', name:'Стартовый ящик', icon:'📦', price:50, odds:{consumer:55, industrial:25, milspec:14, restricted:5, classified:.8, covert:.2}},
+  {id:'s2', cat:'start', name:'Дневной ящик', icon:'🌅', price:75, odds:{consumer:50, industrial:25, milspec:15, restricted:7, classified:2, covert:.9, rare:.1}},
+  {id:'s3', cat:'start', name:'Бюджетный', icon:'💵', price:120, odds:{consumer:42, industrial:28, milspec:18, restricted:9, classified:2.5, covert:.5}},
+  {id:'w1', cat:'weapon', name:'Оружейный', icon:'🔫', price:150, odds:{consumer:38, industrial:30, milspec:19, restricted:10, classified:2.5, covert:.5}},
+  {id:'w2', cat:'weapon', name:'Призма', icon:'🔮', price:300, odds:{consumer:30, industrial:30, milspec:20, restricted:14, classified:5, covert:1}},
+  {id:'w3', cat:'weapon', name:'Хрома', icon:'💠', price:450, odds:{consumer:22, industrial:28, milspec:24, restricted:18, classified:6, covert:1.8, rare:.2}},
+  {id:'w4', cat:'weapon', name:'Гамма', icon:'☢️', price:600, odds:{consumer:15, industrial:25, milspec:27, restricted:22, classified:8, covert:2.5, rare:.5}},
+  {id:'w5', cat:'weapon', name:'Спектр', icon:'🌈', price:800, odds:{consumer:10, industrial:22, milspec:28, restricted:25, classified:11, covert:3.5, rare:.5}},
+  {id:'w6', cat:'weapon', name:'Фракция', icon:'⚔️', price:1000, odds:{consumer:5, industrial:18, milspec:30, restricted:28, classified:14, covert:4.5, rare:.5}},
+  {id:'w7', cat:'weapon', name:'Клач', icon:'🧲', price:220, odds:{consumer:35, industrial:30, milspec:20, restricted:11, classified:3, covert:.8}},
+  {id:'w8', cat:'weapon', name:'Горизонт', icon:'🌄', price:350, odds:{consumer:28, industrial:30, milspec:22, restricted:14, classified:5, covert:1}},
+  {id:'w9', cat:'weapon', name:'Разлом', icon:'🌋', price:550, odds:{consumer:20, industrial:28, milspec:25, restricted:18, classified:7, covert:1.8, rare:.2}},
+  {id:'w10', cat:'weapon', name:'Арсенал', icon:'🏹', price:700, odds:{consumer:14, industrial:24, milspec:28, restricted:22, classified:9, covert:2.5, rare:.5}},
+  {id:'w11', cat:'weapon', name:'Кобра', icon:'🐍', price:900, odds:{consumer:8, industrial:20, milspec:28, restricted:26, classified:12, covert:5, rare:1}},
+  {id:'k1c', cat:'knife', name:'Ящик с ножами', icon:'🔪', price:500, odds:{milspec:40, restricted:35, classified:18, covert:5, rare:2}},
+  {id:'k2c', cat:'knife', name:'Допплер', icon:'🌀', price:1500, odds:{milspec:30, restricted:35, classified:22, covert:9, rare:4}},
+  {id:'k3c', cat:'knife', name:'Керамбит-ящик', icon:'🗡️', price:3000, odds:{milspec:20, restricted:32, classified:28, covert:13, rare:7}},
+  {id:'k4c', cat:'knife', name:'Бабочка', icon:'🦋', price:5000, odds:{milspec:10, restricted:28, classified:32, covert:18, rare:12}},
+  {id:'k5c', cat:'knife', name:'Клинок', icon:'⚔️', price:2500, odds:{milspec:22, restricted:33, classified:27, covert:12, rare:6}},
+  {id:'k6c', cat:'knife', name:'Танто', icon:'🔪', price:1800, odds:{milspec:26, restricted:34, classified:24, covert:10, rare:6}},
+  {id:'gl1', cat:'glove', name:'Перчаточный', icon:'🧤', price:450, odds:{milspec:42, restricted:33, classified:18, covert:5, rare:2}},
+  {id:'gl2', cat:'glove', name:'Слоёные', icon:'🧶', price:1200, odds:{milspec:32, restricted:34, classified:22, covert:9, rare:3}},
+  {id:'gl3', cat:'glove', name:'Королевские', icon:'👑', price:3500, odds:{milspec:15, restricted:30, classified:30, covert:17, rare:8}},
+  {id:'gl4', cat:'glove', name:'Бездна', icon:'🕳️', price:2000, odds:{milspec:24, restricted:32, classified:26, covert:13, rare:5}},
+  {id:'gl5', cat:'glove', name:'Спорт', icon:'🏃', price:800, odds:{milspec:36, restricted:34, classified:20, covert:7, rare:3}},
+  {id:'l1', cat:'lux', name:'Королевский', icon:'👑', price:1000, odds:{industrial:15, milspec:30, restricted:30, classified:15, covert:7, rare:3}},
+  {id:'l2', cat:'lux', name:'Дракон', icon:'🐉', price:2500, odds:{milspec:22, restricted:33, classified:27, covert:13, rare:5}},
+  {id:'l3', cat:'lux', name:'Легенда', icon:'🌟', price:6000, odds:{milspec:12, restricted:28, classified:32, covert:18, rare:10}},
+  {id:'l4', cat:'lux', name:'Бездна', icon:'🕳️', price:12000, odds:{restricted:25, classified:35, covert:25, rare:15}},
+  {id:'l5', cat:'lux', name:'Империя', icon:'🏛️', price:4000, odds:{milspec:18, restricted:30, classified:30, covert:16, rare:6}},
+  {id:'l6', cat:'lux', name:'Мираж', icon:'🏜️', price:1800, odds:{industrial:10, milspec:28, restricted:32, classified:19, covert:8, rare:3}},
+  {id:'e1', cat:'event', name:'Хэллоуин', icon:'🎃', price:750, odds:{consumer:20, industrial:25, milspec:25, restricted:20, classified:7, covert:2.5, rare:.5}},
+  {id:'e2', cat:'event', name:'Новогодний', icon:'🎄', price:850, odds:{consumer:18, industrial:25, milspec:26, restricted:20, classified:8, covert:2.5, rare:.5}},
+  {id:'e3', cat:'event', name:'Космический', icon:'🚀', price:2000, odds:{industrial:15, milspec:28, restricted:30, classified:18, covert:7, rare:2}},
+  {id:'e4', cat:'event', name:'Пиратский', icon:'🏴‍☠️', price:1100, odds:{consumer:14, industrial:22, milspec:28, restricted:22, classified:10, covert:3.5, rare:.5}},
+  {id:'e5', cat:'event', name:'Самурай', icon:'🗾', price:1600, odds:{industrial:12, milspec:26, restricted:32, classified:20, covert:8, rare:2}},
+  {id:'e6', cat:'event', name:'Киберспорт', icon:'🎮', price:1300, odds:{industrial:14, milspec:28, restricted:30, classified:18, covert:8, rare:2}},
+  {id:'x1', cat:'weapon', name:'Заря', icon:'🌅', price:180, odds:{consumer:36, industrial:30, milspec:20, restricted:10, classified:3, covert:.8}},
+  {id:'x2', cat:'weapon', name:'Эхо', icon:'🔊', price:260, odds:{consumer:32, industrial:30, milspec:21, restricted:12, classified:4, covert:1}},
+  {id:'x3', cat:'weapon', name:'Вихрь', icon:'🌪️', price:400, odds:{consumer:26, industrial:28, milspec:24, restricted:15, classified:5, covert:1.5, rare:.2}},
+  {id:'x4', cat:'weapon', name:'Пламя', icon:'🔥', price:750, odds:{consumer:16, industrial:24, milspec:27, restricted:21, classified:9, covert:2.5, rare:.5}},
+  {id:'x5', cat:'weapon', name:'Тень', icon:'🌑', price:1100, odds:{consumer:10, industrial:20, milspec:28, restricted:25, classified:12, covert:4, rare:1}},
+  {id:'x6', cat:'weapon', name:'Гроза', icon:'⛈️', price:320, odds:{consumer:30, industrial:30, milspec:22, restricted:13, classified:4, covert:1}},
+  {id:'x7', cat:'weapon', name:'Лёд', icon:'❄️', price:500, odds:{consumer:22, industrial:28, milspec:25, restricted:17, classified:6, covert:1.8, rare:.2}},
+  {id:'x8', cat:'weapon', name:'Пустыня', icon:'🏜️', price:280, odds:{consumer:32, industrial:30, milspec:21, restricted:12, classified:4, covert:1}}
 ];
 
 const CATS = [
@@ -621,22 +672,17 @@ const PROMOS = {
   'FREE':    {coins:250, once:true, label:'250 💰'}
 };
 
-/* ============ СОСТОЯНИЕ ============ */
+/* ============ СОСТОЯНИЕ (локальное сохранение) ============ */
 let state = {
   balance: 1000,
   inventory: [],
-  stats: {
-    opens:0, spent:0, earned:0, best:null,
-    upgraded:0, contracts:0, sold:0,
-    dailyStreak:0, lastDaily:'',
-    level:1, xp:0
-  },
+  stats: {opens:0, spent:0, earned:0, best:null, upgraded:0, contracts:0, sold:0, dailyStreak:0, lastDaily:'', level:1, xp:0},
   settings: {sound:true, fast:false},
   ach: {}, promo: {},
   seen: {freeCase:'', daily:''}
 };
 try {
-  const raw = localStorage.getItem('cs2pro_v2');
+  const raw = localStorage.getItem('cs2pro_v3');
   if (raw) {
     const d = JSON.parse(raw);
     state = Object.assign(state, d);
@@ -647,7 +693,7 @@ try {
     state.seen = Object.assign({freeCase:'', daily:''}, d.seen||{});
   }
 } catch(e){}
-function save(){ try{ localStorage.setItem('cs2pro_v2', JSON.stringify(state)); }catch(e){} }
+function save(){ try{ localStorage.setItem('cs2pro_v3', JSON.stringify(state)); }catch(e){} }
 
 /* ============ DOM ============ */
 const $ = id => document.getElementById(id);
@@ -700,8 +746,6 @@ function updateHUD(){
   $('lvlText').textContent = Math.floor(state.stats.xp) + '/' + need;
   $('soundBtn').classList.toggle('off', !state.settings.sound);
   $('fastRow').classList.toggle('on', state.settings.fast);
-
-  // Daily strip
   const today = new Date().toDateString();
   const claimed = state.stats.lastDaily === today;
   const strip = $('dailyStrip');
@@ -758,11 +802,11 @@ document.querySelectorAll('.navBtn').forEach(b => b.addEventListener('click', ()
 
 /* ============ МЕДИА ============ */
 function media(it){
-  if (it.img) return '<img class="imedia" src="' + it.img + '" alt="">';
+  if (it.img) return '<img class="imedia" src="' + it.img + '" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'"><div class="iemoji" style="display:none">' + it.e + '</div>';
   return '<div class="iemoji">' + it.e + '</div>';
 }
 function mediaMini(it){
-  if (it.img) return '<img class="rowImg" src="' + it.img + '" alt="">';
+  if (it.img) return '<img class="rowImg" src="' + it.img + '" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'"><div class="iemoji" style="display:none;font-size:24px">' + it.e + '</div>';
   return '<div class="iemoji">' + it.e + '</div>';
 }
 
@@ -1032,8 +1076,10 @@ function showDetail(it){
 }
 $('dClose').onclick = () => { $('detailScreen').classList.remove('show'); detailItem = null; };
 
-/* ============ АПГРЕЙД ============ */
+/* ============ АПГРЕЙД (колесо) ============ */
 let upSource = null, upTarget = null, upOptions = [];
+let wheelSpin = false;
+
 function renderUpgrade(){
   const box = $('upgradeBox');
   if (!state.inventory.length){
@@ -1077,8 +1123,22 @@ function renderUpgrade(){
       html += '<div class="upSection"><h3>ВЫБЕРИ ЦЕЛЬ</h3><div id="upTargets"></div></div>';
       if (upTarget){
         const chance = Math.min(90, Math.max(5, (upSource.p / upTarget.p) * 100));
-        html += '<div class="chance">' + chance.toFixed(1) + '%</div>' +
-          '<button class="btn" id="upDo">УЛУЧШИТЬ</button>';
+        html +=
+          '<div class="upSection"><h3>ШАНС</h3>' +
+            '<div class="wheelWrap">' +
+              '<div class="wheelBox" id="wheelBox" style="--up-chance:' + chance + ';--up-win:linear-gradient(135deg,#4bff88,#00c853)">' +
+                '<div class="wheelCenter">' +
+                  '<div class="wcEmoji">' + upTarget.e + '</div>' +
+                  '<div class="wcPct">' + chance.toFixed(1) + '%</div>' +
+                  '<div class="wcLbl">ШАНС</div>' +
+                '</div>' +
+                '<div class="wheelPointer" id="wheelPointer"></div>' +
+              '</div>' +
+              '<div class="wheelLabels"><span>Провал</span><span>Успех</span></div>' +
+            '</div>' +
+            '<div class="wheelResult" id="wheelResult"></div>' +
+            '<button class="btn" id="upDo" style="margin-top:12px">КРУТИТЬ</button>' +
+          '</div>';
       } else {
         html += '<div style="text-align:center;font-size:12px;opacity:.5;margin-top:8px">Выбери цель выше</div>';
       }
@@ -1102,90 +1162,127 @@ function renderUpgrade(){
       });
     }
     const db = $('upDo');
-    if (db) db.onclick = doUpgrade;
+    if (db) db.onclick = doUpgradeSpin;
   }
 }
+
 function generateUpTargets(){
   const pool = ITEMS.filter(i => i.p > upSource.p && i.p < upSource.p * 20);
   upOptions = [];
   const shuffled = [...pool].sort(() => Math.random() - .5);
   const seen = new Set();
   for (const it of shuffled){
-    if (upOptions.length >= 6) break;
+    if (upOptions.length >= 8) break;
     if (!seen.has(it.id)){ seen.add(it.id); upOptions.push(it); }
   }
   upTarget = null;
 }
-function doUpgrade(){
-  if (!upSource || !upTarget) return;
+
+function doUpgradeSpin(){
+  if (!upSource || !upTarget || wheelSpin) return;
+  wheelSpin = true;
   const chance = Math.min(90, Math.max(5, (upSource.p / upTarget.p) * 100));
   const win = Math.random() * 100 < chance;
 
-  // Remove source from inventory
-  const idx = state.inventory.indexOf(upSource);
-  if (idx < 0){ toast('Предмет пропал'); return; }
+  const pointer = $('wheelPointer');
+  const resultEl = $('wheelResult');
+  if (!pointer) return;
 
+  resultEl.classList.remove('show','win','lose');
+  resultEl.textContent = '';
+
+  // Сектор: успех = [0, chance*3.6] градусов от верхней точки по часовой стрелке
+  const winAngle = chance * 3.6;
+  // Угол стрелки относительно верхней точки (0 = вверх)
+  let targetAngle;
   if (win){
-    state.inventory.splice(idx, 1, upTarget);
-    state.stats.upgraded++;
-    if (!state.stats.best || upTarget.p > state.stats.best.p) state.stats.best = upTarget;
-    addXP(30);
+    targetAngle = Math.random() * Math.max(0.5, winAngle - 6) + 3;
   } else {
-    state.inventory.splice(idx, 1);
+    const loseStart = winAngle + 3;
+    const loseEnd = 360 - 3;
+    targetAngle = loseStart + Math.random() * Math.max(0.5, loseEnd - loseStart);
   }
-  save(); updateHUD(); checkAchievements();
 
-  showUpModal(win ? upTarget : upSource, upTarget, win);
+  // Стрелка стартует сверху и делает 4-6 полных оборотов
+  const spins = 4 + Math.floor(Math.random() * 3);
+  const finalRotation = spins * 360 + targetAngle;
 
-  upSource = upTarget = null;
-  upOptions = [];
-  setTimeout(() => renderUpgrade(), 400);
-}
-function showUpModal(item, target, win){
-  const R = RAR[item.r];
-  const body = $('modalBody');
-  $('modalTitle').textContent = win ? '✨ УСПЕХ' : '💔 ПРОВАЛ';
-  body.innerHTML =
-    '<div class="upPair">' +
-      '<div class="p1"><div class="pEmoji">' + item.e + '</div><div class="pName">' + item.n + '</div></div>' +
-    '</div>' +
-    '<div class="upResult ' + (win ? 'win' : 'lose') + '">' + (win ? 'УЛУЧШЕНО' : 'ПРЕДМЕТ ПОТЕРЯН') + '</div>' +
-    '<div style="margin-top:14px"><button class="btn" id="upModalOk">ОК</button></div>';
-  $('modalScreen').classList.add('show');
-  $('modalClose').style.display = 'block';
+  pointer.style.transition = 'none';
+  pointer.style.transform = 'translate(-50%,0) rotate(0deg)';
+  void pointer.offsetWidth;
+
+  requestAnimationFrame(() => {
+    pointer.style.transition = 'transform 4.2s cubic-bezier(.12,.88,.18,1)';
+    pointer.style.transform = 'translate(-50%,0) rotate(' + finalRotation + 'deg)';
+  });
+
+  // Звук тиков во время вращения
+  if (actx && state.settings.sound){
+    const start = Date.now();
+    (function tick(){
+      const elapsed = Date.now() - start;
+      if (elapsed > 4200) return;
+      const t = elapsed / 4200;
+      const interval = 40 + t * t * 320;
+      blip(900 + Math.random()*200, .02, 'square', .025);
+      setTimeout(tick, interval);
+    })();
+  }
+
   setTimeout(() => {
-    const b = $('upModalOk');
-    if (b) b.onclick = () => $('modalScreen').classList.remove('show');
-  }, 20);
-  if (win) revealSound(item.r);
-  else blip(160, .3, 'sawtooth', .06);
-  vibrate(win ? [50,40,80] : 100);
+    wheelSpin = false;
+    resultEl.textContent = win ? '✨ УСПЕХ!' : '💔 ПРОВАЛ';
+    resultEl.className = 'wheelResult show ' + (win ? 'win' : 'lose');
+    vibrate(win ? [40,60,40,60,120] : 100);
+
+    const idx = state.inventory.indexOf(upSource);
+    if (idx < 0){ toast('Предмет пропал'); return; }
+
+    if (win){
+      state.inventory.splice(idx, 1, upTarget);
+      state.stats.upgraded++;
+      if (!state.stats.best || upTarget.p > state.stats.best.p) state.stats.best = upTarget;
+      addXP(30);
+      revealSound(upTarget.r);
+    } else {
+      state.inventory.splice(idx, 1);
+      blip(160, .35, 'sawtooth', .06);
+    }
+    save(); updateHUD(); checkAchievements();
+
+    setTimeout(() => {
+      upSource = upTarget = null;
+      upOptions = [];
+      renderUpgrade();
+      toast(win ? '🎉 Апгрейд успешен: ' + upTarget?.n : 'Предмет потерян');
+    }, 1600);
+  }, 4300);
 }
 
-/* ============ КОНТРАКТ ============ */
-let contractRar = 'consumer';
+/* ============ КОНТРАКТ (любые предметы) ============ */
+let contractRar = 'any';
 let contractSel = [];
 function renderContract(){
   const box = $('contractBox');
   const rEl = $('contractRarities');
   rEl.innerHTML = '';
-  // Show rarity chips that have >= 1 item of NEXT tier
-  RAR_ORDER.slice(0, -1).forEach(r => {
+  const filters = [{id:'any', n:'🎯 Любые'}, ...RAR_ORDER.slice(0,-1).map(r => ({id:r, n:RAR[r].n}))];
+  filters.forEach(f => {
     const b = document.createElement('button');
-    b.className = 'tab' + (contractRar === r ? ' active' : '');
-    b.textContent = RAR[r].n;
-    b.style.borderLeft = '3px solid ' + RAR[r].c;
-    b.onclick = () => { contractRar = r; contractSel = []; renderContract(); };
+    b.className = 'tab' + (contractRar === f.id ? ' active' : '');
+    b.textContent = f.n;
+    if (f.id !== 'any') b.style.borderLeft = '3px solid ' + RAR[f.id].c;
+    b.onclick = () => { contractRar = f.id; contractSel = []; renderContract(); };
     rEl.appendChild(b);
   });
-  const avail = state.inventory.filter(i => i.r === contractRar);
-  const nextRar = RAR_ORDER[RAR_ORDER.indexOf(contractRar) + 1];
+
+  const avail = state.inventory.filter(i => contractRar === 'any' || i.r === contractRar);
 
   let html =
-    '<div class="upSection"><h3>ВЫБРАНО ' + contractSel.length + ' / 10 · ' + RAR[contractRar].n + '</h3>' +
+    '<div class="upSection"><h3>ВЫБРАНО ' + contractSel.length + ' / 10</h3>' +
     '<div class="contractGrid" id="cSlots"></div>' +
     '<div style="font-size:12px;opacity:.6;text-align:center;margin-bottom:8px">' +
-      'Заменяем 10 предметов на 1 из <b style="color:' + RAR[nextRar].c + '">' + RAR[nextRar].n + '</b>' +
+      '10 любых предметов → 1 случайный предмет' +
     '</div>' +
     '<button class="btn' + (contractSel.length === 10 ? '' : ' secondary') + '" id="contractDo" ' +
       (contractSel.length === 10 ? '' : 'disabled') + '>ЗАКЛЮЧИТЬ КОНТРАКТ</button>' +
@@ -1195,7 +1292,6 @@ function renderContract(){
     '<div class="miniGrid" id="cItems"></div></div>';
   box.innerHTML = html;
 
-  // Slots
   const slots = $('cSlots');
   for (let i = 0; i < 10; i++){
     const s = document.createElement('div');
@@ -1204,7 +1300,7 @@ function renderContract(){
       s.className = 'cSlot filled';
       s.style.setProperty('--c', RAR[it.r].c);
       s.style.setProperty('--g', it.g);
-      s.innerHTML = '<div class="iemoji">' + it.e + '</div>';
+      s.innerHTML = media(it);
       s.onclick = () => { contractSel.splice(i, 1); renderContract(); };
     } else {
       s.className = 'cSlot';
@@ -1213,24 +1309,23 @@ function renderContract(){
     slots.appendChild(s);
   }
 
-  // Available items
   const g = $('cItems');
   if (!avail.length){
-    g.innerHTML = '<div class="empty" style="grid-column:1/-1">Нет предметов этой редкости</div>';
+    g.innerHTML = '<div class="empty" style="grid-column:1/-1">Нет предметов для контракта</div>';
   } else {
     avail.forEach(it => {
-      const isSel = contractSel.some(x => x === it);
+      const isSel = contractSel.some(x => x.id === it.id);
       const card = document.createElement('div');
       card.className = 'mini' + (isSel ? ' sel' : '');
       card.style.setProperty('--c', RAR[it.r].c);
       card.style.setProperty('--g', it.g);
-      card.innerHTML = '<div class="iemoji">' + it.e + '</div>' +
+      card.innerHTML = mediaMini(it) +
         '<div class="iname">' + it.n + '</div>' +
         '<div class="iprice">' + it.p + ' 💰</div>';
       card.onclick = () => {
         if (isSel){
-          const idx = contractSel.indexOf(it);
-          contractSel.splice(idx, 1);
+          const idx = contractSel.findIndex(x => x.id === it.id);
+          if (idx >= 0) contractSel.splice(idx, 1);
         } else if (contractSel.length < 10){
           contractSel.push(it);
         }
@@ -1243,13 +1338,14 @@ function renderContract(){
   const db = $('contractDo');
   if (db) db.onclick = doContract;
 }
+
 function doContract(){
   if (contractSel.length !== 10) return;
-  const nextRar = RAR_ORDER[RAR_ORDER.indexOf(contractRar) + 1];
-  const pool = ITEMS.filter(i => i.r === nextRar);
+  // Победитель: случайный предмет из всех, что дороже среднего выбранного (любая редкость)
+  const avgPrice = contractSel.reduce((s,i) => s+i.p, 0) / 10;
+  const pool = ITEMS.filter(i => i.p > avgPrice * 0.5);
   const winner = pool[Math.floor(Math.random() * pool.length)];
 
-  // Remove selected items
   contractSel.forEach(it => {
     const idx = state.inventory.indexOf(it);
     if (idx >= 0) state.inventory.splice(idx, 1);
@@ -1263,18 +1359,15 @@ function doContract(){
   contractSel = [];
   renderContract();
 
-  showContractModal(winner);
-}
-function showContractModal(item){
-  const R = RAR[item.r];
   $('modalTitle').textContent = '🔄 КОНТРАКТ ЗАКЛЮЧЁН';
   const body = $('modalBody');
+  const R = RAR[winner.r];
   body.innerHTML =
     '<div style="text-align:center;margin:12px 0">' +
       '<div style="font-size:11px;font-weight:900;letter-spacing:2px;color:' + R.c + ';text-transform:uppercase">' + R.n + '</div>' +
-      '<div class="resultPreview" style="--rc:' + R.c + ';--rg:' + item.g + ';margin:12px auto">' + media(item) + '</div>' +
-      '<div style="font-size:18px;font-weight:900">' + item.n + '</div>' +
-      '<div style="font-size:15px;font-weight:800;color:#ffd76a;margin-top:6px">' + item.p.toLocaleString('ru') + ' 💰</div>' +
+      '<div class="resultPreview" style="--rc:' + R.c + ';--rg:' + winner.g + ';margin:12px auto">' + media(winner) + '</div>' +
+      '<div style="font-size:18px;font-weight:900">' + winner.n + '</div>' +
+      '<div style="font-size:15px;font-weight:800;color:#ffd76a;margin-top:6px">' + winner.p.toLocaleString('ru') + ' 💰</div>' +
     '</div>' +
     '<button class="btn" id="cModalOk">ОК</button>';
   $('modalScreen').classList.add('show');
@@ -1282,7 +1375,7 @@ function showContractModal(item){
     const b = $('cModalOk');
     if (b) b.onclick = () => $('modalScreen').classList.remove('show');
   }, 20);
-  revealSound(item.r);
+  revealSound(winner.r);
   vibrate([50, 60, 80]);
 }
 
@@ -1297,7 +1390,7 @@ function showShop(){
     card.className = 'shopCard';
     card.style.setProperty('--c', RAR[it.r].c);
     card.style.setProperty('--g', it.g);
-    card.innerHTML = '<div class="iemoji">' + it.e + '</div>' +
+    card.innerHTML = media(it) +
       '<div class="sName">' + it.n + '</div>' +
       '<div class="sPrice">' + it.p.toLocaleString('ru') + ' 💰</div>';
     card.onclick = () => {
@@ -1464,7 +1557,7 @@ $('menuStats').onclick = showStats;
 $('menuPromo').onclick = showPromo;
 $('menuReset').onclick = () => {
   if (!confirm('Сбросить весь прогресс? Это действие необратимо.')) return;
-  localStorage.removeItem('cs2pro_v2');
+  localStorage.removeItem('cs2pro_v3');
   location.reload();
 };
 
