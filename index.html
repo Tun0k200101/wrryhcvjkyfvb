@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Подбор меню</title>
+<title>Подбор меню · продукты и цены</title>
 <style>
   :root{
     --bg:#f5f6f8; --card:#fff; --accent:#16a34a; --accent-soft:#e7f8ec;
@@ -12,11 +12,8 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0}
-  body{
-    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-    background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
-  }
-  .app{max-width:760px;margin:0 auto;padding:20px 16px 120px}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+  .app{max-width:820px;margin:0 auto;padding:20px 16px 120px}
   header h1{font-size:22px;margin:0 0 4px}
   .sub{color:var(--muted);font-size:14px;margin:0 0 16px}
   .progress{height:6px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin-bottom:22px}
@@ -25,60 +22,59 @@
   h2{font-size:19px;margin:0 0 4px}
   h3{font-size:16px;margin:26px 0 10px}
   .hint{color:var(--muted);font-size:14px;margin:0 0 16px;line-height:1.45}
+  .note{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:12.5px;padding:10px 12px;border-radius:10px;margin-bottom:16px}
 
   .grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
-  .option{
-    display:flex;align-items:center;gap:10px;padding:14px;border:1.5px solid var(--border);
-    background:var(--card);border-radius:var(--radius);cursor:pointer;transition:.15s;
-    font:inherit;color:inherit;text-align:left;box-shadow:var(--shadow);
-  }
+  .option{display:flex;align-items:center;gap:10px;padding:13px 14px;border:1.5px solid var(--border);background:var(--card);border-radius:var(--radius);cursor:pointer;transition:.15s;font:inherit;color:inherit;text-align:left;box-shadow:var(--shadow)}
   .option:hover{border-color:#cbd5e1;transform:translateY(-1px)}
   .option.active{border-color:var(--accent);background:var(--accent-soft)}
   .option .emoji{font-size:20px}
-  .option .check{
-    margin-left:auto;width:20px;height:20px;border-radius:50%;border:2px solid var(--border);
-    flex:0 0 auto;display:grid;place-items:center;font-size:12px;color:#fff;line-height:1;
-  }
+  .option .check{margin-left:auto;width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex:0 0 auto;display:grid;place-items:center;font-size:12px;color:#fff;line-height:1}
   .option.active .check{background:var(--accent);border-color:var(--accent)}
 
   .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{
-    padding:9px 16px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);
-    cursor:pointer;font:inherit;font-size:14px;transition:.15s;
-  }
+  .chip{padding:9px 16px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font:inherit;font-size:14px;transition:.15s}
   .chip:hover{border-color:#cbd5e1}
   .chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .link{display:inline-block;margin-top:12px;background:none;border:none;padding:0;color:var(--accent);font:inherit;font-size:14px;cursor:pointer;text-decoration:underline}
 
-  .link{
-    display:inline-block;margin-top:12px;background:none;border:none;padding:0;
-    color:var(--accent);font:inherit;font-size:14px;cursor:pointer;text-decoration:underline;
-  }
-
-  /* бюджет */
-  .budget-box{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+  .budget-box{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
   .budget-value{font-size:38px;font-weight:700;line-height:1;margin-bottom:18px}
   .budget-value small{font-size:16px;color:var(--muted);font-weight:500}
   input[type=range]{width:100%;accent-color:var(--accent);height:28px;cursor:pointer}
   .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .field-label{font-size:13px;color:var(--muted);margin:0 0 6px;font-weight:500}
 
-  /* результаты */
   .summary{background:var(--accent-soft);border-radius:var(--radius);padding:14px 16px;font-size:14px;line-height:1.6}
   .summary b{font-weight:600}
-  .dish{
-    display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);
-    border:1.5px solid var(--border);border-radius:var(--radius);margin-bottom:10px;box-shadow:var(--shadow);
-  }
-  .dish-emoji{font-size:26px;flex:0 0 auto}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:14px 0}
+  .stat{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px}
+  .stat-val{font-size:22px;font-weight:700;line-height:1.1;margin-bottom:4px;word-break:break-word}
+  .stat-lbl{font-size:12.5px;color:var(--muted)}
+
+  .menu-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
+  .menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:600}
+  .menu-head .price{color:var(--accent);font-size:16px}
+  .menu-day{font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:8px 0 4px;font-weight:600}
+  .menu-item{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:14px;border-bottom:1px dashed var(--border)}
+  .menu-item:last-child{border-bottom:none}
+  .menu-item .n{color:var(--muted);font-size:12px;margin-right:6px;min-width:52px;display:inline-block}
+  .menu-item .p{white-space:nowrap;color:var(--muted);font-size:13px}
+
+  .dish{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:8px}
+  .dish-emoji{font-size:22px;flex:0 0 auto}
   .dish-body{flex:1;min-width:0}
-  .dish-name{font-weight:600;font-size:15px;margin-bottom:3px}
-  .dish-meta{color:var(--muted);font-size:12.5px;line-height:1.4}
-  .dish-price{font-weight:700;font-size:16px;white-space:nowrap}
-  .total{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--card);border:1.5px dashed var(--accent);border-radius:var(--radius);font-weight:600;margin-top:10px}
+  .dish-name{font-weight:600;font-size:14.5px;margin-bottom:2px}
+  .dish-meta{color:var(--muted);font-size:12px;line-height:1.4}
+  .dish-price{font-weight:700;font-size:15px;white-space:nowrap}
+
+  .total{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--card);border:1.5px dashed var(--accent);border-radius:var(--radius);font-weight:600;margin-top:10px}
+
   .empty{text-align:center;padding:40px 20px;color:var(--muted);background:var(--card);border-radius:var(--radius);border:1.5px dashed var(--border)}
 
-  /* футер */
   .footer{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-top:1px solid var(--border);padding:12px 16px}
-  .footer-inner{max-width:760px;margin:0 auto;display:flex;gap:10px}
+  .footer-inner{max-width:820px;margin:0 auto;display:flex;gap:10px}
   .btn-primary{flex:1;padding:14px;border:none;border-radius:12px;background:var(--accent);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:.15s}
   .btn-primary:hover:not(:disabled){background:#15803d}
   .btn-primary:disabled{background:#cbd5e1;cursor:not-allowed}
@@ -105,138 +101,360 @@
 </div>
 
 <script>
-/* ─────────────────────────  ДАННЫЕ  ───────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════
+   КАТАЛОГ ПРОДУКТОВ
+   Цены — приближённые (Москва/МО, конец 2024 – 2025), ₽ за kg/L/piece.
+   Массив заменяемый: подставь сюда реальные данные из API/парсера.
+   ═══════════════════════════════════════════════════════════════════ */
+const PRODUCTS = {
+  // Мясо
+  chicken_breast:{name:'Куриная грудка',       unit:'kg', price:390, allergens:[]},
+  chicken_thigh: {name:'Куриное бедро',        unit:'kg', price:290, allergens:[]},
+  beef:          {name:'Говядина (лопатка)',   unit:'kg', price:620, allergens:[]},
+  pork:          {name:'Свинина (шея)',        unit:'kg', price:490, allergens:[]},
+  turkey:        {name:'Индейка (филе)',       unit:'kg', price:530, allergens:[]},
+  minced_beef:   {name:'Фарш говяжий',         unit:'kg', price:470, allergens:[]},
+  bacon:         {name:'Бекон',                unit:'kg', price:550, allergens:[]},
 
+  // Рыба и морепродукты
+  salmon:  {name:'Лосось',    unit:'kg', price:1250, allergens:['fish']},
+  cod:     {name:'Треска',    unit:'kg', price:520,  allergens:['fish']},
+  pollock: {name:'Минтай',    unit:'kg', price:290,  allergens:['fish']},
+  shrimp:  {name:'Креветки',  unit:'kg', price:950,  allergens:['seafood']},
+
+  // Молочные
+  cheese:     {name:'Сыр твёрдый',          unit:'kg', price:750, allergens:['milk']},
+  mozzarella: {name:'Моцарелла',            unit:'kg', price:820, allergens:['milk']},
+  cottage:    {name:'Творог 5%',            unit:'kg', price:390, allergens:['milk']},
+  milk:       {name:'Молоко 2.5%',          unit:'L',  price:85,  allergens:['milk']},
+  sour_cream: {name:'Сметана 15%',          unit:'kg', price:290, allergens:['milk']},
+  kefir:      {name:'Кефир',                unit:'L',  price:100, allergens:['milk']},
+  yogurt:     {name:'Йогурт натуральный',   unit:'kg', price:260, allergens:['milk']},
+  butter:     {name:'Масло сливочное',      unit:'kg', price:950, allergens:['milk']},
+  egg:        {name:'Яйца С1',              unit:'piece', price:13, allergens:['eggs']},
+
+  // Крупы, мука, хлеб
+  pasta:     {name:'Макароны',  unit:'kg',    price:130, allergens:['gluten']},
+  rice:      {name:'Рис',       unit:'kg',    price:120, allergens:[]},
+  buckwheat: {name:'Гречка',    unit:'kg',    price:95,  allergens:[]},
+  oats:      {name:'Овсянка',   unit:'kg',    price:105, allergens:['gluten']},
+  flour:     {name:'Мука',      unit:'kg',    price:65,  allergens:['gluten']},
+  bread:     {name:'Хлеб',      unit:'piece', price:65,  allergens:['gluten']},
+  lavash:    {name:'Лаваш',     unit:'piece', price:45,  allergens:['gluten']},
+
+  // Овощи
+  potato:     {name:'Картофель',        unit:'kg', price:55,  allergens:[]},
+  carrot:     {name:'Морковь',          unit:'kg', price:48,  allergens:[]},
+  onion:      {name:'Лук',              unit:'kg', price:42,  allergens:[]},
+  tomato:     {name:'Помидоры',         unit:'kg', price:190, allergens:[]},
+  cucumber:   {name:'Огурцы',           unit:'kg', price:130, allergens:[]},
+  pepper:     {name:'Перец болгарский', unit:'kg', price:230, allergens:[]},
+  cabbage:    {name:'Капуста',          unit:'kg', price:42,  allergens:[]},
+  beet:       {name:'Свёкла',           unit:'kg', price:52,  allergens:[]},
+  zucchini:   {name:'Кабачки',          unit:'kg', price:110, allergens:[]},
+  eggplant:   {name:'Баклажаны',        unit:'kg', price:190, allergens:[]},
+  mushrooms:  {name:'Шампиньоны',       unit:'kg', price:260, allergens:[]},
+  greens:     {name:'Зелень',           unit:'kg', price:450, allergens:[]},
+  garlic:     {name:'Чеснок',           unit:'kg', price:270, allergens:[]},
+
+  // Фрукты
+  apple:  {name:'Яблоки',    unit:'kg', price:110, allergens:[]},
+  banana: {name:'Бананы',    unit:'kg', price:120, allergens:[]},
+  orange: {name:'Апельсины', unit:'kg', price:140, allergens:[]},
+  lemon:  {name:'Лимон',     unit:'kg', price:160, allergens:[]},
+
+  // Прочее
+  oil_sun:      {name:'Масло растительное', unit:'L', price:155, allergens:[]},
+  oil_olive:    {name:'Масло оливковое',    unit:'L', price:850, allergens:[]},
+  salt:         {name:'Соль',               unit:'kg', price:30,  allergens:[]},
+  pepper_black: {name:'Перец чёрный',       unit:'kg', price:900, allergens:[]},
+  soy_sauce:    {name:'Соевый соус',        unit:'L', price:320, allergens:['soy']},
+  tomato_paste: {name:'Томатная паста',     unit:'kg', price:260, allergens:[]},
+  sugar:        {name:'Сахар',              unit:'kg', price:80,  allergens:[]},
+  honey:        {name:'Мёд',                unit:'kg', price:850, allergens:[]},
+  walnuts:      {name:'Грецкие орехи',      unit:'kg', price:850, allergens:['nuts']},
+  beans_can:    {name:'Фасоль консерв.',    unit:'piece', price:110, allergens:[]},
+  corn_can:     {name:'Кукуруза консерв.',  unit:'piece', price:95,  allergens:[]},
+  peas_can:     {name:'Горошек зелёный',    unit:'piece', price:95,  allergens:[]},
+  olives_can:   {name:'Оливки',             unit:'piece', price:180, allergens:[]},
+  peas_dry:     {name:'Горох сушёный',      unit:'kg', price:90, allergens:[]},
+};
+
+/* ═══════════════════════════════════════════════════════════════════
+   МАГАЗИНЫ И ИХ ЦЕНОВЫЕ КОЭФФИЦИЕНТЫ
+   (1.00 = средняя цена; Ашан/Магнит/Дикси дешевле, ВкусВилл дороже)
+   ═══════════════════════════════════════════════════════════════════ */
 const STORES = [
-  { id:'auchan',      name:'Ашан',        emoji:'🛒' },
-  { id:'pyaterochka', name:'Пятёрочка',   emoji:'🟢' },
-  { id:'perekrestok', name:'Перекрёсток', emoji:'🔵' },
-  { id:'magnit',      name:'Магнит',      emoji:'🔴' },
-  { id:'vkusvill',    name:'ВкусВилл',    emoji:'🥬' },
-  { id:'lenta',       name:'Лента',       emoji:'🔷' },
+  {id:'auchan',      name:'Ашан',        emoji:'🛒', mult:0.90},
+  {id:'pyaterochka', name:'Пятёрочка',   emoji:'🟢', mult:1.00},
+  {id:'perekrestok', name:'Перекрёсток', emoji:'🔵', mult:1.12},
+  {id:'magnit',      name:'Магнит',      emoji:'🔴', mult:0.95},
+  {id:'vkusvill',    name:'ВкусВилл',    emoji:'🥬', mult:1.30},
+  {id:'lenta',       name:'Лента',       emoji:'🔷', mult:1.05},
+  {id:'dixy',        name:'Дикси',       emoji:'🟡', mult:0.93},
 ];
 
+/* ═══════════════════════════════════════════════════════════════════
+   РЕЦЕПТЫ
+   ing: [{p:'product_id', g:граммы/штуки}]
+   Для продуктов с unit:'piece' — количество = штуки.
+   cat: breakfast | soup | main | salad
+   ═══════════════════════════════════════════════════════════════════ */
+const RECIPES = [
+  // ─── Завтраки ───
+  {id:'oat_banana', name:'Овсянка с бананом', emoji:'🥣', cat:'breakfast',
+    ing:[{p:'oats',g:60},{p:'milk',g:200},{p:'banana',g:80},{p:'salt',g:2}], allergens:['gluten','milk'], tags:['veg']},
+  {id:'omelette_cheese', name:'Омлет с сыром', emoji:'🍳', cat:'breakfast',
+    ing:[{p:'egg',g:3},{p:'milk',g:50},{p:'cheese',g:40},{p:'butter',g:10}], allergens:['eggs','milk'], tags:['veg']},
+  {id:'syrniki', name:'Сырники', emoji:'🧀', cat:'breakfast',
+    ing:[{p:'cottage',g:250},{p:'egg',g:1},{p:'flour',g:40},{p:'sugar',g:20},{p:'oil_sun',g:20}], allergens:['milk','eggs','gluten'], tags:['veg']},
+  {id:'buck_butter', name:'Гречка с маслом', emoji:'🍚', cat:'breakfast',
+    ing:[{p:'buckwheat',g:80},{p:'butter',g:15},{p:'salt',g:2}], allergens:['milk'], tags:['veg']},
+  {id:'sandwich_cheese', name:'Бутерброды с сыром и помидором', emoji:'🥪', cat:'breakfast',
+    ing:[{p:'bread',g:1},{p:'cheese',g:40},{p:'tomato',g:60},{p:'butter',g:8}], allergens:['gluten','milk'], tags:['veg']},
+  {id:'pancakes', name:'Блины', emoji:'🥞', cat:'breakfast',
+    ing:[{p:'flour',g:100},{p:'milk',g:180},{p:'egg',g:2},{p:'oil_sun',g:15},{p:'sugar',g:15}], allergens:['gluten','milk','eggs'], tags:['veg']},
+  {id:'cottage_apple', name:'Творог с яблоком и мёдом', emoji:'🍎', cat:'breakfast',
+    ing:[{p:'cottage',g:200},{p:'apple',g:100},{p:'honey',g:15}], allergens:['milk'], tags:['veg']},
+  {id:'fried_eggs', name:'Яичница-глазунья', emoji:'🍳', cat:'breakfast',
+    ing:[{p:'egg',g:2},{p:'oil_sun',g:10},{p:'salt',g:1}], allergens:['eggs'], tags:['veg']},
+  {id:'yogurt_banana', name:'Йогурт с бананом и орехами', emoji:'🥛', cat:'breakfast',
+    ing:[{p:'yogurt',g:200},{p:'banana',g:80},{p:'walnuts',g:15}], allergens:['milk','nuts'], tags:['veg']},
+  {id:'oat_apple', name:'Овсянка с яблоком', emoji:'🍏', cat:'breakfast',
+    ing:[{p:'oats',g:60},{p:'milk',g:200},{p:'apple',g:100}], allergens:['gluten','milk'], tags:['veg']},
+
+  // ─── Супы ───
+  {id:'borsch', name:'Борщ', emoji:'🍲', cat:'soup',
+    ing:[{p:'beef',g:150},{p:'beet',g:100},{p:'cabbage',g:100},{p:'potato',g:100},{p:'carrot',g:50},{p:'onion',g:50},{p:'tomato_paste',g:20}], allergens:[], tags:['beef','meat']},
+  {id:'shchi', name:'Щи', emoji:'🍲', cat:'soup',
+    ing:[{p:'cabbage',g:150},{p:'potato',g:100},{p:'carrot',g:50},{p:'onion',g:50},{p:'chicken_thigh',g:150}], allergens:[], tags:['chicken','meat']},
+  {id:'chicken_noodle', name:'Куриный суп с лапшой', emoji:'🍜', cat:'soup',
+    ing:[{p:'chicken_breast',g:150},{p:'carrot',g:50},{p:'onion',g:50},{p:'pasta',g:50}], allergens:['gluten'], tags:['chicken','meat']},
+  {id:'ukha', name:'Уха из трески', emoji:'🐟', cat:'soup',
+    ing:[{p:'cod',g:180},{p:'potato',g:100},{p:'carrot',g:50},{p:'onion',g:50}], allergens:['fish'], tags:['fish']},
+  {id:'pea_soup', name:'Гороховый суп', emoji:'🥣', cat:'soup',
+    ing:[{p:'peas_dry',g:80},{p:'potato',g:100},{p:'carrot',g:50},{p:'onion',g:50}], allergens:[], tags:['veg']},
+  {id:'solyanka', name:'Солянка', emoji:'🍲', cat:'soup',
+    ing:[{p:'beef',g:120},{p:'olives_can',g:1},{p:'onion',g:50},{p:'tomato_paste',g:30}], allergens:[], tags:['beef','meat']},
+  {id:'mushroom_cream', name:'Крем-суп из шампиньонов', emoji:'🍄', cat:'soup',
+    ing:[{p:'mushrooms',g:200},{p:'onion',g:50},{p:'milk',g:150},{p:'butter',g:15}], allergens:['milk'], tags:['veg','mushrooms']},
+  {id:'okroshka', name:'Окрошка на кефире', emoji:'🥤', cat:'soup',
+    ing:[{p:'potato',g:80},{p:'egg',g:2},{p:'cucumber',g:80},{p:'kefir',g:250},{p:'greens',g:20}], allergens:['milk','eggs'], tags:['veg']},
+
+  // ─── Горячее ───
+  {id:'grilled_breast', name:'Куриная грудка на гриле', emoji:'🍗', cat:'main',
+    ing:[{p:'chicken_breast',g:200},{p:'oil_olive',g:10},{p:'pepper_black',g:1},{p:'salt',g:2}], allergens:[], tags:['chicken','meat']},
+  {id:'chicken_sour_cream', name:'Курица в сливочном соусе', emoji:'🍗', cat:'main',
+    ing:[{p:'chicken_thigh',g:200},{p:'sour_cream',g:80},{p:'onion',g:40},{p:'oil_sun',g:10}], allergens:['milk'], tags:['chicken','meat']},
+  {id:'turkey_cutlets', name:'Котлеты из индейки', emoji:'🍖', cat:'main',
+    ing:[{p:'turkey',g:180},{p:'onion',g:40},{p:'bread',g:1},{p:'egg',g:1},{p:'oil_sun',g:15}], allergens:['gluten','eggs'], tags:['meat']},
+  {id:'pork_steak', name:'Стейк из свинины', emoji:'🥩', cat:'main',
+    ing:[{p:'pork',g:200},{p:'pepper_black',g:1},{p:'salt',g:2},{p:'oil_sun',g:10}], allergens:[], tags:['pork','meat']},
+  {id:'beef_stew', name:'Говядина тушёная с овощами', emoji:'🍲', cat:'main',
+    ing:[{p:'beef',g:200},{p:'carrot',g:80},{p:'onion',g:60},{p:'tomato_paste',g:30},{p:'oil_sun',g:10}], allergens:[], tags:['beef','meat']},
+  {id:'plov', name:'Плов с говядиной', emoji:'🍚', cat:'main',
+    ing:[{p:'rice',g:100},{p:'beef',g:180},{p:'carrot',g:100},{p:'onion',g:50},{p:'oil_sun',g:15}], allergens:[], tags:['beef','meat']},
+  {id:'carbonara', name:'Паста карбонара', emoji:'🍝', cat:'main',
+    ing:[{p:'pasta',g:120},{p:'bacon',g:80},{p:'egg',g:1},{p:'cheese',g:30},{p:'pepper_black',g:1}], allergens:['gluten','eggs','milk'], tags:['pork','meat']},
+  {id:'pasta_tomato', name:'Спагетти с томатным соусом', emoji:'🍝', cat:'main',
+    ing:[{p:'pasta',g:120},{p:'tomato',g:150},{p:'garlic',g:10},{p:'oil_olive',g:10}], allergens:['gluten'], tags:['veg']},
+  {id:'salmon_baked', name:'Лосось запечённый', emoji:'🐟', cat:'main',
+    ing:[{p:'salmon',g:180},{p:'lemon',g:30},{p:'oil_olive',g:10}], allergens:['fish'], tags:['fish']},
+  {id:'cod_baked', name:'Треска в духовке с овощами', emoji:'🐟', cat:'main',
+    ing:[{p:'cod',g:200},{p:'carrot',g:80},{p:'onion',g:60},{p:'oil_sun',g:10}], allergens:['fish'], tags:['fish']},
+  {id:'shrimp_garlic', name:'Креветки в чесночном соусе', emoji:'🍤', cat:'main',
+    ing:[{p:'shrimp',g:200},{p:'garlic',g:15},{p:'butter',g:20},{p:'greens',g:10}], allergens:['seafood','milk'], tags:['seafood']},
+  {id:'chicken_curry', name:'Курица карри с рисом', emoji:'🍛', cat:'main',
+    ing:[{p:'chicken_thigh',g:180},{p:'rice',g:100},{p:'onion',g:50},{p:'sour_cream',g:50},{p:'oil_sun',g:10}], allergens:['milk'], tags:['chicken','meat','spicy']},
+  {id:'buck_mushrooms', name:'Гречка с грибами', emoji:'🍄', cat:'main',
+    ing:[{p:'buckwheat',g:80},{p:'mushrooms',g:150},{p:'onion',g:50},{p:'oil_sun',g:10}], allergens:[], tags:['veg','mushrooms']},
+  {id:'mashed_potato', name:'Картофельное пюре', emoji:'🥔', cat:'main',
+    ing:[{p:'potato',g:300},{p:'milk',g:100},{p:'butter',g:20},{p:'salt',g:2}], allergens:['milk'], tags:['veg']},
+  {id:'fried_potato', name:'Жареная картошка с луком', emoji:'🍟', cat:'main',
+    ing:[{p:'potato',g:300},{p:'onion',g:80},{p:'oil_sun',g:20}], allergens:[], tags:['veg']},
+  {id:'risotto', name:'Ризотто с грибами', emoji:'🍚', cat:'main',
+    ing:[{p:'rice',g:100},{p:'mushrooms',g:150},{p:'onion',g:50},{p:'cheese',g:30},{p:'butter',g:15}], allergens:['milk'], tags:['veg','mushrooms']},
+  {id:'shawarma', name:'Шаурма с курицей', emoji:'🌯', cat:'main',
+    ing:[{p:'chicken_breast',g:150},{p:'cabbage',g:80},{p:'tomato',g:50},{p:'lavash',g:1},{p:'sour_cream',g:30}], allergens:['gluten','milk'], tags:['chicken','meat','spicy']},
+  {id:'golubtsy', name:'Голубцы', emoji:'🥬', cat:'main',
+    ing:[{p:'cabbage',g:200},{p:'minced_beef',g:150},{p:'rice',g:50},{p:'onion',g:50},{p:'tomato_paste',g:30}], allergens:[], tags:['beef','meat']},
+  {id:'tefteli', name:'Тефтели', emoji:'🍲', cat:'main',
+    ing:[{p:'minced_beef',g:200},{p:'rice',g:50},{p:'onion',g:50},{p:'tomato_paste',g:30}], allergens:[], tags:['beef','meat']},
+  {id:'pasta_cheese', name:'Макароны с сыром', emoji:'🍝', cat:'main',
+    ing:[{p:'pasta',g:120},{p:'cheese',g:50},{p:'butter',g:15}], allergens:['gluten','milk'], tags:['veg']},
+  {id:'rice_veg', name:'Рис с овощами', emoji:'🍚', cat:'main',
+    ing:[{p:'rice',g:100},{p:'carrot',g:80},{p:'pepper',g:80},{p:'onion',g:50},{p:'oil_sun',g:10}], allergens:[], tags:['veg']},
+  {id:'stewed_veg', name:'Тушёные овощи', emoji:'🍆', cat:'main',
+    ing:[{p:'zucchini',g:150},{p:'eggplant',g:100},{p:'tomato',g:100},{p:'onion',g:50},{p:'oil_sun',g:10}], allergens:[], tags:['veg']},
+  {id:'zapekanka', name:'Творожная запеканка', emoji:'🥧', cat:'main',
+    ing:[{p:'cottage',g:300},{p:'egg',g:2},{p:'flour',g:50},{p:'sugar',g:30}], allergens:['milk','eggs','gluten'], tags:['veg']},
+
+  // ─── Салаты ───
+  {id:'greek_salad', name:'Салат греческий', emoji:'🥗', cat:'salad',
+    ing:[{p:'cucumber',g:100},{p:'tomato',g:100},{p:'pepper',g:50},{p:'mozzarella',g:50},{p:'olives_can',g:1},{p:'oil_olive',g:10}], allergens:['milk'], tags:['veg']},
+  {id:'caesar', name:'Салат Цезарь', emoji:'🥗', cat:'salad',
+    ing:[{p:'chicken_breast',g:100},{p:'cabbage',g:80},{p:'cheese',g:20},{p:'bread',g:1},{p:'oil_olive',g:10}], allergens:['gluten','milk'], tags:['chicken','meat']},
+  {id:'olivier', name:'Оливье с курицей', emoji:'🥗', cat:'salad',
+    ing:[{p:'potato',g:100},{p:'carrot',g:50},{p:'egg',g:2},{p:'peas_can',g:1},{p:'cucumber',g:80},{p:'chicken_breast',g:100},{p:'sour_cream',g:30}], allergens:['milk','eggs'], tags:['chicken','meat']},
+  {id:'vinaigrette', name:'Винегрет', emoji:'🥗', cat:'salad',
+    ing:[{p:'beet',g:100},{p:'potato',g:80},{p:'carrot',g:60},{p:'peas_can',g:1},{p:'cabbage',g:60},{p:'oil_sun',g:15}], allergens:[], tags:['veg']},
+  {id:'veg_salad', name:'Салат из свежих овощей', emoji:'🥗', cat:'salad',
+    ing:[{p:'cucumber',g:100},{p:'tomato',g:100},{p:'onion',g:30},{p:'greens',g:15},{p:'oil_sun',g:10}], allergens:[], tags:['veg']},
+  {id:'cabbage_salad', name:'Салат из капусты с морковью', emoji:'🥗', cat:'salad',
+    ing:[{p:'cabbage',g:150},{p:'carrot',g:50},{p:'oil_sun',g:15}], allergens:[], tags:['veg']},
+  {id:'bean_salad', name:'Салат из фасоли', emoji:'🥗', cat:'salad',
+    ing:[{p:'beans_can',g:1},{p:'onion',g:40},{p:'greens',g:15},{p:'oil_olive',g:10}], allergens:[], tags:['veg']},
+];
+
+/* ═══════════════════════════════════════════════════════════════════
+   СПРАВОЧНИКИ ФИЛЬТРОВ
+   ═══════════════════════════════════════════════════════════════════ */
 const ALLERGENS = [
-  { id:'nuts',    name:'Орехи' },
-  { id:'milk',    name:'Молоко' },
-  { id:'gluten',  name:'Глютен' },
-  { id:'eggs',    name:'Яйца' },
-  { id:'soy',     name:'Соя' },
-  { id:'fish',    name:'Рыба' },
-  { id:'seafood', name:'Морепродукты' },
+  {id:'nuts',    name:'Орехи'},
+  {id:'milk',    name:'Молоко'},
+  {id:'gluten',  name:'Глютен'},
+  {id:'eggs',    name:'Яйца'},
+  {id:'soy',     name:'Соя'},
+  {id:'fish',    name:'Рыба'},
+  {id:'seafood', name:'Морепродукты'},
 ];
-
 const EXCLUDES = [
-  { id:'fish',      name:'Рыба' },
-  { id:'seafood',   name:'Морепродукты' },
-  { id:'pork',      name:'Свинина' },
-  { id:'beef',      name:'Говядина' },
-  { id:'chicken',   name:'Курица' },
-  { id:'meat',      name:'Любое мясо' },
-  { id:'spicy',     name:'Острое' },
-  { id:'mushrooms', name:'Грибы' },
-  { id:'offal',     name:'Субпродукты' },
+  {id:'fish',      name:'Рыба'},
+  {id:'seafood',   name:'Морепродукты'},
+  {id:'pork',      name:'Свинина'},
+  {id:'beef',      name:'Говядина'},
+  {id:'chicken',   name:'Курица'},
+  {id:'meat',      name:'Любое мясо'},
+  {id:'spicy',     name:'Острое'},
+  {id:'mushrooms', name:'Грибы'},
+  {id:'veg',       name:'Вегетарианское'},
 ];
 
-// tags — вкусовые/составные признаки (для исключений)
-// allergens — реальные аллергены (для аллергий)
-const DISHES = [
-  { id:1,  name:'Оливье с курицей',      price:180, emoji:'🥗', stores:['auchan','pyaterochka','magnit','perekrestok'], tags:['chicken','meat'], allergens:['eggs','milk'] },
-  { id:2,  name:'Салат Цезарь',          price:260, emoji:'🥬', stores:['perekrestok','vkusvill','auchan'],             tags:['chicken','meat'], allergens:['gluten','milk','eggs'] },
-  { id:3,  name:'Борщ с говядиной',      price:220, emoji:'🍲', stores:['auchan','magnit','pyaterochka','lenta'],       tags:['beef','meat'],    allergens:[] },
-  { id:4,  name:'Уха из лосося',         price:320, emoji:'🐟', stores:['perekrestok','lenta','vkusvill'],               tags:['fish'],           allergens:['fish'] },
-  { id:5,  name:'Паста карбонара',       price:290, emoji:'🍝', stores:['perekrestok','vkusvill'],                       tags:['pork','meat'],    allergens:['gluten','milk','eggs'] },
-  { id:6,  name:'Плов с говядиной',      price:250, emoji:'🍚', stores:['auchan','magnit','lenta'],                      tags:['beef','meat'],    allergens:[] },
-  { id:7,  name:'Куриный суп с лапшой',  price:190, emoji:'🍜', stores:['pyaterochka','magnit','auchan'],                tags:['chicken','meat'], allergens:['gluten','eggs'] },
-  { id:8,  name:'Греческий салат',       price:210, emoji:'🫒', stores:['vkusvill','perekrestok','auchan'],              tags:['veg'],            allergens:['milk'] },
-  { id:9,  name:'Овощной суп-пюре',      price:160, emoji:'🥣', stores:['pyaterochka','magnit','auchan','lenta'],        tags:['veg'],            allergens:[] },
-  { id:10, name:'Стейк из свинины',      price:380, emoji:'🥩', stores:['auchan','lenta'],                               tags:['pork','meat'],    allergens:[] },
-  { id:11, name:'Креветки в соусе',      price:420, emoji:'🍤', stores:['vkusvill','perekrestok','lenta'],               tags:['seafood'],        allergens:['seafood'] },
-  { id:12, name:'Том Ям',                price:390, emoji:'🌶️', stores:['vkusvill','perekrestok'],                       tags:['seafood','spicy'],allergens:['seafood','fish'] },
-  { id:13, name:'Курица карри',          price:280, emoji:'🍛', stores:['pyaterochka','magnit','auchan'],                tags:['chicken','meat','spicy'], allergens:['milk'] },
-  { id:14, name:'Гречка с грибами',      price:170, emoji:'🍄', stores:['pyaterochka','magnit','auchan','lenta','vkusvill'], tags:['veg','mushrooms'], allergens:[] },
-  { id:15, name:'Блины с творогом',      price:150, emoji:'🥞', stores:['pyaterochka','magnit','auchan'],                tags:['veg'],            allergens:['gluten','milk','eggs'] },
-  { id:16, name:'Тофу-боул',             price:240, emoji:'🥡', stores:['vkusvill','perekrestok'],                       tags:['veg'],            allergens:['soy'] },
-  { id:17, name:'Шаурма с курицей',      price:200, emoji:'🌯', stores:['pyaterochka','magnit'],                         tags:['chicken','meat','spicy'], allergens:['gluten'] },
-  { id:18, name:'Сырники',               price:140, emoji:'🧀', stores:['pyaterochka','magnit','auchan','vkusvill'],     tags:['veg'],            allergens:['gluten','milk','eggs'] },
-  { id:19, name:'Котлеты из индейки',    price:230, emoji:'🍗', stores:['auchan','lenta','perekrestok'],                 tags:['meat'],           allergens:[] },
-  { id:20, name:'Рис с овощами',         price:130, emoji:'🍱', stores:['pyaterochka','magnit','auchan','lenta'],        tags:['veg'],            allergens:[] },
-];
-
-/* ─────────────────────────  СОСТОЯНИЕ  ───────────────────────── */
-
+/* ═══════════════════════════════════════════════════════════════════
+   СОСТОЯНИЕ И УТИЛИТЫ
+   ═══════════════════════════════════════════════════════════════════ */
 const state = {
-  step: 0,          // 0..3 — шаги, 4 — результаты
+  step: 0,
   stores: [],
   allergies: [],
   exclude: [],
-  budget: 400,
+  budget: 5000,
+  days: 3,
 };
 
-const money = n => new Intl.NumberFormat('ru-RU').format(n) + ' ₽';
-const toggle = (arr, v) => {
-  const i = arr.indexOf(v);
-  i === -1 ? arr.push(v) : arr.splice(i, 1);
-};
+const DAY_OPTIONS = [1, 3, 7];
+const money = n => new Intl.NumberFormat('ru-RU').format(Math.round(n)) + ' ₽';
+const toggle = (arr, v) => { const i = arr.indexOf(v); i === -1 ? arr.push(v) : arr.splice(i,1); };
 const nameOf = (list, id) => (list.find(x => x.id === id) || {}).name || id;
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 
-/* ─────────────────────────  ФИЛЬТРАЦИЯ  ───────────────────────── */
-
-function filterDishes() {
-  return DISHES.filter(d => {
-    // 1) есть хотя бы в одном выбранном магазине
-    if (!d.stores.some(s => state.stores.includes(s))) return false;
-    // 2) аллергены
-    if (d.allergens.some(a => state.allergies.includes(a))) return false;
-    // 3) исключения (теги)
-    if (d.tags.some(t => state.exclude.includes(t))) return false;
-    // 4) бюджет
-    if (d.price > state.budget) return false;
-    return true;
-  });
-}
-
-// Жадно собираем набор блюд в рамках бюджета
-function buildCombo(dishes, budget) {
-  const sorted = [...dishes].sort((a, b) => b.price - a.price);
-  const picked = [];
+/* ═══════════════════════════════════════════════════════════════════
+   ЦЕНА БЛЮДА В МАГАЗИНАХ (по ингредиентам), берём минимальную
+   ═══════════════════════════════════════════════════════════════════ */
+function recipePrice(recipe, storeId) {
+  const mult = (STORES.find(s => s.id === storeId) || {mult:1}).mult;
   let total = 0;
-  for (const d of sorted) {
-    if (picked.length >= 5) break;
-    if (total + d.price <= budget) { picked.push(d); total += d.price; }
+  for (const item of recipe.ing) {
+    const prod = PRODUCTS[item.p];
+    if (!prod) continue;
+    if (prod.unit === 'kg' || prod.unit === 'L') total += (item.g / 1000) * prod.price;
+    else total += item.g * prod.price;
   }
-  return { picked, total };
+  return Math.round(total * mult / 10) * 10;
 }
 
-/* ─────────────────────────  РЕНДЕР ШАГОВ  ───────────────────────── */
+function recipeCheapestPrice(recipe) {
+  if (!state.stores.length) return 0;
+  return Math.min(...state.stores.map(sid => recipePrice(recipe, sid)));
+}
 
+/* ═══════════════════════════════════════════════════════════════════
+   ФИЛЬТРАЦИЯ БЛЮД
+   ═══════════════════════════════════════════════════════════════════ */
+function filterRecipes() {
+  const list = [];
+  for (const r of RECIPES) {
+    if (r.allergens.some(a => state.allergies.includes(a))) continue;
+    if (r.tags.some(t => state.exclude.includes(t))) continue;
+    list.push({...r, price: recipeCheapestPrice(r)});
+  }
+  return list;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ГЕНЕРАЦИЯ ПРИМЕРОВ МЕНЮ
+   Меню на день = завтрак + суп + горячее + салат (4 блюда)
+   ═══════════════════════════════════════════════════════════════════ */
+function buildSamples(valid, days, budget, count = 6) {
+  const b = valid.filter(r => r.cat === 'breakfast');
+  const s = valid.filter(r => r.cat === 'soup');
+  const m = valid.filter(r => r.cat === 'main');
+  const sal = valid.filter(r => r.cat === 'salad');
+  if (!b.length || !s.length || !m.length || !sal.length) return [];
+
+  const candidates = [];
+  const tries = 4000;
+  for (let i = 0; i < tries; i++) {
+    const plan = [];
+    let total = 0;
+    for (let d = 0; d < days; d++) {
+      const day = [
+        {type:'Завтрак', dish: pick(b)},
+        {type:'Суп',     dish: pick(s)},
+        {type:'Горячее', dish: pick(m)},
+        {type:'Салат',   dish: pick(sal)},
+      ];
+      plan.push(day);
+      for (const x of day) total += x.dish.price;
+    }
+    if (total <= budget && total >= budget * 0.55) {
+      candidates.push({plan, total});
+    }
+  }
+  candidates.sort((a,b) => b.total - a.total);
+  // убираем дубли по набору id
+  const seen = new Set();
+  const out = [];
+  for (const c of candidates) {
+    const key = c.plan.flatMap(d => d.map(x => x.dish.id)).join('|');
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(c);
+    if (out.length >= count) break;
+  }
+  return out;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   РЕНДЕР ШАГОВ
+   ═══════════════════════════════════════════════════════════════════ */
 function renderStores() {
   const all = state.stores.length === STORES.length;
   return `
     <h2>Шаг 1. Где закупаемся?</h2>
-    <p class="hint">Выберите один или несколько магазинов — покажем блюда, которые можно собрать из их продуктов.</p>
+    <p class="hint">Выберите один или несколько магазинов. У каждого свой ценовой коэффициент — итоговая цена блюда берётся по самому выгодному.</p>
     <div class="grid">
       ${STORES.map(s => {
         const on = state.stores.includes(s.id);
-        return `<button class="option ${on ? 'active' : ''}" data-act="store" data-val="${s.id}">
+        return `<button class="option ${on?'active':''}" data-act="store" data-val="${s.id}">
           <span class="emoji">${s.emoji}</span>
           <span>${s.name}</span>
-          <span class="check">${on ? '✓' : ''}</span>
+          <span class="check">${on?'✓':''}</span>
         </button>`;
       }).join('')}
     </div>
-    <button class="link" data-act="allstores">${all ? 'Снять выбор' : 'Выбрать все'}</button>
+    <button class="link" data-act="allstores">${all?'Снять выбор':'Выбрать все'}</button>
   `;
 }
 
 function renderAllergies() {
   return `
     <h2>Шаг 2. Есть ли аллергии?</h2>
-    <p class="hint">Блюда с этими ингредиентами полностью исключим. Если аллергий нет — просто жмите «Далее».</p>
+    <p class="hint">Блюда с этими аллергенами полностью исключим. Нет аллергий — просто жмите «Далее».</p>
     <div class="chips">
       ${ALLERGENS.map(a => `
-        <button class="chip ${state.allergies.includes(a.id) ? 'active' : ''}"
-                data-act="allergy" data-val="${a.id}">${a.name}</button>`).join('')}
+        <button class="chip ${state.allergies.includes(a.id)?'active':''}" data-act="allergy" data-val="${a.id}">${a.name}</button>
+      `).join('')}
     </div>
   `;
 }
@@ -244,100 +462,140 @@ function renderAllergies() {
 function renderExcludes() {
   return `
     <h2>Шаг 3. Чего не хотите в меню?</h2>
-    <p class="hint">Вкусы и продукты, которые не любите. Например, рыба, свинина, острое.</p>
+    <p class="hint">Вкусы и продукты, которые не любите.</p>
     <div class="chips">
       ${EXCLUDES.map(a => `
-        <button class="chip ${state.exclude.includes(a.id) ? 'active' : ''}"
-                data-act="exclude" data-val="${a.id}">${a.name}</button>`).join('')}
+        <button class="chip ${state.exclude.includes(a.id)?'active':''}" data-act="exclude" data-val="${a.id}">${a.name}</button>
+      `).join('')}
     </div>
   `;
 }
 
 function renderBudget() {
-  const quick = [200, 300, 500, 800, 1500];
+  const quick = [1000, 3000, 5000, 10000, 25000];
   return `
-    <h2>Шаг 4. На какую сумму?</h2>
-    <p class="hint">Бюджет на одно блюдо. Покажем варианты в этих рамках и соберём набор.</p>
+    <h2>Шаг 4. Бюджет и длина плана</h2>
+    <p class="hint">Сумма — на весь план. В день — 4 блюда: завтрак, суп, горячее, салат.</p>
     <div class="budget-box">
       <div class="budget-value" id="budgetValue">${state.budget} <small>₽</small></div>
-      <input type="range" id="budgetRange" min="100" max="2000" step="50" value="${state.budget}">
+      <input type="range" id="budgetRange" min="1000" max="25000" step="500" value="${state.budget}">
       <div class="quick">
-        ${quick.map(v => `<button class="chip ${state.budget === v ? 'active' : ''}"
-          data-act="budget" data-val="${v}">${v} ₽</button>`).join('')}
+        ${quick.map(v => `<button class="chip ${state.budget===v?'active':''}" data-act="budget" data-val="${v}">${v} ₽</button>`).join('')}
       </div>
+    </div>
+    <p class="field-label">Длина плана</p>
+    <div class="chips">
+      ${DAY_OPTIONS.map(d => `
+        <button class="chip ${state.days===d?'active':''}" data-act="days" data-val="${d}">
+          ${d} ${d===1?'день':d<5?'дня':'дней'}
+        </button>
+      `).join('')}
     </div>
   `;
 }
 
 function renderResults() {
-  const dishes = filterDishes();
-  const { picked, total } = buildCombo(dishes, state.budget);
+  const valid = filterRecipes();
+  const byCat = {
+    breakfast: valid.filter(r => r.cat==='breakfast'),
+    soup:      valid.filter(r => r.cat==='soup'),
+    main:      valid.filter(r => r.cat==='main'),
+    salad:     valid.filter(r => r.cat==='salad'),
+  };
 
   const chips = [];
   if (state.stores.length) chips.push('Магазины: <b>' + state.stores.map(s => nameOf(STORES, s)).join(', ') + '</b>');
   chips.push('Аллергии: <b>' + (state.allergies.length ? state.allergies.map(a => nameOf(ALLERGENS, a)).join(', ') : 'нет') + '</b>');
   chips.push('Исключено: <b>' + (state.exclude.length ? state.exclude.map(a => nameOf(EXCLUDES, a)).join(', ') : 'ничего') + '</b>');
-  chips.push('Бюджет: <b>' + money(state.budget) + '</b>');
+  chips.push('Бюджет: <b>' + money(state.budget) + '</b> · план: <b>' + state.days + ' ' + (state.days===1?'день':state.days<5?'дня':'дней') + '</b>');
 
-  if (!dishes.length) {
+  if (!valid.length) {
     return `
       <h2>Ничего не нашлось 😔</h2>
       <div class="summary">${chips.join('<br>')}</div>
-      <div class="empty" style="margin-top:16px">
-        Попробуйте увеличить бюджет, добавить магазин или убрать одно из исключений.
-      </div>`;
+      <div class="empty" style="margin-top:16px">Попробуйте увеличить бюджет, добавить магазин или убрать один из фильтров.</div>
+    `;
   }
 
+  const perDay = BigInt(byCat.breakfast.length) * BigInt(byCat.soup.length) * BigInt(byCat.main.length) * BigInt(byCat.salad.length);
+  const totalCombos = perDay === 0n ? 0n : perDay ** BigInt(state.days);
+  const totalFormatted = totalCombos.toLocaleString('ru-RU');
+
+  const samples = buildSamples(valid, state.days, state.budget, 6);
+
   return `
-    <h2>Готово! Нашлось блюд: ${dishes.length}</h2>
+    <h2>Готово! Подобрано блюд: ${valid.length}</h2>
     <div class="summary">${chips.join('<br>')}</div>
 
-    <h3>🍽 Набор в рамках бюджета</h3>
-    ${picked.map(d => dishCard(d)).join('')}
-    <div class="total">
-      <span>Итого</span>
-      <span>${money(total)} из ${money(state.budget)}</span>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-val">${perDay.toLocaleString('ru-RU')}</div>
+        <div class="stat-lbl">комбинаций на 1 день (завтрак × суп × горячее × салат)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">${totalFormatted}</div>
+        <div class="stat-lbl">комбинаций на план из ${state.days} ${state.days===1?'дня':state.days<5?'дней':'дней'}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">${valid.length}</div>
+        <div class="stat-lbl">блюд доступно после фильтров</div>
+      </div>
     </div>
 
-    <h3>Все подходящие блюда</h3>
-    ${dishes.sort((a, b) => a.price - b.price).map(d => dishCard(d)).join('')}
+    <h3>🍽 Примеры меню в рамках бюджета</h3>
+    ${samples.length ? samples.map(s => `
+      <div class="menu-card">
+        <div class="menu-head">
+          <span>Вариант · ${state.days} ${state.days===1?'день':state.days<5?'дня':'дней'}</span>
+          <span class="price">${money(s.total)}</span>
+        </div>
+        ${s.plan.map((day, i) => `
+          ${state.days > 1 ? `<div class="menu-day">День ${i+1}</div>` : ''}
+          ${day.map(x => `
+            <div class="menu-item">
+              <span><span class="n">${x.type}</span>${x.dish.emoji} ${x.dish.name}</span>
+              <span class="p">${money(x.dish.price)}</span>
+            </div>
+          `).join('')}
+        `).join('')}
+      </div>
+    `).join('') : `<div class="empty">В этот бюджет примеры меню не помещаются. Увеличьте бюджет или сократите план.</div>`}
+
+    <h3>📋 Все доступные блюда</h3>
+    ${['breakfast','soup','main','salad'].map(cat => {
+      const label = {breakfast:'Завтраки', soup:'Супы', main:'Горячее', salad:'Салаты'}[cat];
+      const list = byCat[cat].slice().sort((a,b) => a.price - b.price);
+      if (!list.length) return '';
+      return `
+        <div style="font-weight:600;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px">${label} · ${list.length}</div>
+        ${list.map(d => `
+          <div class="dish">
+            <div class="dish-emoji">${d.emoji}</div>
+            <div class="dish-body">
+              <div class="dish-name">${d.name}</div>
+              <div class="dish-meta">${d.ing.map(i => PRODUCTS[i.p].name).join(' · ')}</div>
+            </div>
+            <div class="dish-price">${money(d.price)}</div>
+          </div>
+        `).join('')}
+      `;
+    }).join('')}
   `;
 }
 
-function dishCard(d) {
-  const stores = d.stores.filter(s => state.stores.includes(s)).map(s => nameOf(STORES, s));
-  return `
-    <div class="dish">
-      <div class="dish-emoji">${d.emoji}</div>
-      <div class="dish-body">
-        <div class="dish-name">${d.name}</div>
-        <div class="dish-meta">${stores.join(' · ')}</div>
-      </div>
-      <div class="dish-price">${money(d.price)}</div>
-    </div>`;
-}
-
-/* ─────────────────────────  УПРАВЛЕНИЕ  ───────────────────────── */
-
+/* ═══════════════════════════════════════════════════════════════════
+   УПРАВЛЕНИЕ
+   ═══════════════════════════════════════════════════════════════════ */
 const STEPS = [renderStores, renderAllergies, renderExcludes, renderBudget];
 const main = document.getElementById('main');
 const backBtn = document.getElementById('back');
 const nextBtn = document.getElementById('next');
 const bar = document.getElementById('bar');
 
-function canGoNext() {
-  if (state.step === 0) return state.stores.length > 0;
-  return true;
-}
+const canGoNext = () => state.step === 0 ? state.stores.length > 0 : true;
 
 function render() {
-  if (state.step === 4) {
-    main.innerHTML = renderResults();
-  } else {
-    main.innerHTML = STEPS[state.step]();
-  }
-
-  // прогресс + кнопки
+  main.innerHTML = state.step === 4 ? renderResults() : STEPS[state.step]();
   const pct = state.step === 4 ? 100 : ((state.step + 1) / 4) * 100;
   bar.style.width = pct + '%';
 
@@ -351,7 +609,7 @@ function render() {
     nextBtn.textContent = state.step === 3 ? 'Подобрать' : 'Далее';
     nextBtn.disabled = !canGoNext();
   }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
 nextBtn.addEventListener('click', () => {
@@ -359,29 +617,24 @@ nextBtn.addEventListener('click', () => {
   if (state.step === 3) { state.step = 4; render(); return; }
   state.step++; render();
 });
-
 backBtn.addEventListener('click', () => {
   if (state.step === 4) { state.step = 0; render(); return; }
   if (state.step > 0) { state.step--; render(); }
 });
 
-// клики по опциям
 main.addEventListener('click', e => {
   const el = e.target.closest('[data-act]');
   if (!el) return;
   const { act, val } = el.dataset;
-
-  if (act === 'store')   toggle(state.stores, val);
-  if (act === 'allergy') toggle(state.allergies, val);
-  if (act === 'exclude') toggle(state.exclude, val);
-  if (act === 'budget')  state.budget = +val;
-  if (act === 'allstores') {
-    state.stores = state.stores.length === STORES.length ? [] : STORES.map(s => s.id);
-  }
+  if (act === 'store')     toggle(state.stores, val);
+  if (act === 'allergy')   toggle(state.allergies, val);
+  if (act === 'exclude')   toggle(state.exclude, val);
+  if (act === 'budget')    state.budget = +val;
+  if (act === 'days')      state.days = +val;
+  if (act === 'allstores') state.stores = state.stores.length === STORES.length ? [] : STORES.map(s => s.id);
   render();
 });
 
-// слайдер бюджета — без перерисовки, чтобы не дёргался
 main.addEventListener('input', e => {
   if (e.target.id !== 'budgetRange') return;
   state.budget = +e.target.value;
