@@ -2,28 +2,30 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Меню · подбор и рецепты</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Меню · покупки и рецепты</title>
 <style>
 :root{
   --primary:#16a34a; --primary-dark:#15803d; --primary-soft:#dcfce7;
-  --accent:#f59e0b; --accent-soft:#fef3c7;
-  --bg:#faf9f7; --card:#ffffff; --text:#0f172a; --text-soft:#334155;
+  --accent:#f59e0b;
+  --bg:#faf9f7; --text:#0f172a; --text-soft:#334155;
   --muted:#64748b; --border:#e8e6e3; --radius:18px;
   --shadow-sm:0 1px 2px rgba(15,23,42,.04), 0 1px 3px rgba(15,23,42,.06);
   --shadow-md:0 4px 12px -2px rgba(15,23,42,.08), 0 12px 32px -8px rgba(15,23,42,.10);
   --shadow-lg:0 20px 60px -12px rgba(15,23,42,.20);
 }
 *{box-sizing:border-box}
-html,body{margin:0}
+html, body{margin:0; overflow-x:hidden}
+html{-webkit-text-size-adjust:100%}
 body{
   font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
   line-height:1.5;
+  touch-action:pan-y;
 }
 button{font-family:inherit}
 
-/* ─── Hero ─── */
+/* Hero */
 .hero{
   background:
     radial-gradient(1200px 400px at 0% -20%, #bbf7d0 0%, transparent 60%),
@@ -41,50 +43,42 @@ button{font-family:inherit}
   box-shadow:var(--shadow-sm); margin-bottom:16px;
 }
 .hero-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
-.hero h1{
-  font-size:clamp(24px,4vw,34px); margin:0 0 8px; letter-spacing:-0.02em;
-  line-height:1.15; font-weight:800;
-}
+.hero h1{font-size:clamp(24px,4vw,34px);margin:0 0 8px;letter-spacing:-0.02em;line-height:1.15;font-weight:800}
 .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--primary),#10b981);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p{margin:0;color:var(--muted);font-size:15px;max-width:560px}
 
-/* ─── Layout ─── */
+/* Layout */
 .app{max-width:860px;margin:0 auto;padding:0 20px 140px}
 .progress-wrap{padding:20px 0 4px}
 .steps{display:flex;align-items:center;gap:6px;margin-bottom:22px;flex-wrap:wrap}
 .step-dot{
   display:flex;align-items:center;gap:8px;
-  padding:7px 14px 7px 7px; border-radius:99px;
-  font-size:13px; color:var(--muted); font-weight:500;
-  background:transparent; border:1px solid transparent;
-  transition:.2s;
+  padding:7px 14px 7px 7px;border-radius:99px;
+  font-size:13px;color:var(--muted);font-weight:500;
+  background:transparent;border:1px solid transparent;transition:.2s;
 }
 .step-dot.active{background:#fff;border-color:var(--border);color:var(--text);box-shadow:var(--shadow-sm)}
 .step-dot.done{color:var(--primary-dark)}
 .step-num{
   width:24px;height:24px;border-radius:50%;
   display:grid;place-items:center;font-size:12px;font-weight:700;
-  background:#e7e5e4;color:var(--muted);flex:0 0 auto;
-  transition:.2s;
+  background:#e7e5e4;color:var(--muted);flex:0 0 auto;transition:.2s;
 }
 .step-dot.active .step-num{background:var(--primary);color:#fff}
 .step-dot.done .step-num{background:var(--primary-soft);color:var(--primary-dark)}
 
-/* ─── Typography ─── */
 h2{font-size:22px;margin:0 0 6px;letter-spacing:-0.015em;font-weight:700}
 h3{font-size:16px;margin:28px 0 12px;letter-spacing:-0.01em}
 .hint{color:var(--muted);font-size:14.5px;margin:0 0 20px;line-height:1.55}
 .field-label{font-size:12.5px;color:var(--muted);margin:18px 0 8px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
 
-/* ─── Option cards ─── */
 .grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
 .option{
   display:flex;align-items:center;gap:11px;
   padding:14px 15px;border:1.5px solid var(--border);
   background:#fff;border-radius:14px;cursor:pointer;
   transition:all .18s cubic-bezier(.4,0,.2,1);
-  font:inherit;color:inherit;text-align:left;
-  box-shadow:var(--shadow-sm);
+  font:inherit;color:inherit;text-align:left;box-shadow:var(--shadow-sm);
 }
 .option:hover{border-color:#d4d2ce;transform:translateY(-1px);box-shadow:var(--shadow-md)}
 .option.active{border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 3px rgba(22,163,74,.10)}
@@ -93,12 +87,10 @@ h3{font-size:16px;margin:28px 0 12px;letter-spacing:-0.01em}
 .option .check{
   margin-left:auto;width:20px;height:20px;border-radius:50%;
   border:2px solid var(--border);flex:0 0 auto;
-  display:grid;place-items:center;font-size:11px;color:#fff;line-height:1;
-  transition:.18s;
+  display:grid;place-items:center;font-size:11px;color:#fff;line-height:1;transition:.18s;
 }
 .option.active .check{background:var(--primary);border-color:var(--primary)}
 
-/* ─── Chips ─── */
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{
   padding:9px 16px;border-radius:99px;border:1.5px solid var(--border);
@@ -113,7 +105,6 @@ h3{font-size:16px;margin:28px 0 12px;letter-spacing:-0.01em}
   cursor:pointer;text-decoration:none;border-bottom:1px dashed currentColor;
 }
 
-/* ─── Budget ─── */
 .budget-card{
   background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
   padding:26px;box-shadow:var(--shadow-md);
@@ -125,25 +116,17 @@ h3{font-size:16px;margin:28px 0 12px;letter-spacing:-0.01em}
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .budget-value small{font-size:18px;font-weight:600;color:var(--muted);-webkit-text-fill-color:var(--muted)}
-input[type=range]{
-  width:100%;accent-color:var(--primary);height:28px;cursor:pointer;
-  background:transparent;
-}
+input[type=range]{width:100%;accent-color:var(--primary);height:28px;cursor:pointer;background:transparent}
 input[type=range]::-webkit-slider-runnable-track{height:6px;background:#e7e5e4;border-radius:99px}
 input[type=range]::-webkit-slider-thumb{
   -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
   background:#fff;border:3px solid var(--primary);
   box-shadow:0 2px 8px rgba(22,163,74,.30);margin-top:-8px;cursor:grab;
 }
-input[type=range]::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.08)}
 input[type=range]::-moz-range-track{height:6px;background:#e7e5e4;border-radius:99px}
-input[type=range]::-moz-range-thumb{
-  width:16px;height:16px;border-radius:50%;background:#fff;
-  border:3px solid var(--primary);cursor:grab;
-}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--primary);cursor:grab}
 .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 
-/* ─── Summary ─── */
 .summary{
   background:linear-gradient(135deg,#f0fdf4 0%,#f8fafc 100%);
   border:1px solid var(--primary-soft);border-radius:var(--radius);
@@ -151,40 +134,21 @@ input[type=range]::-moz-range-thumb{
 }
 .summary b{color:var(--text);font-weight:600}
 
-/* ─── Stats ─── */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}
-.stat{
-  background:#fff;border:1.5px solid var(--border);border-radius:14px;
-  padding:16px 18px;box-shadow:var(--shadow-sm);
-}
-.stat-val{
-  font-size:22px;font-weight:800;line-height:1.1;margin-bottom:6px;
-  word-break:break-word;letter-spacing:-0.02em;color:var(--primary-dark);
-}
-.stat-val.big{font-size:18px}
+.stat{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-sm)}
+.stat-val{font-size:22px;font-weight:800;line-height:1.1;margin-bottom:6px;word-break:break-word;letter-spacing:-0.02em;color:var(--primary-dark)}
+.stat-val.big{font-size:16px}
 .stat-lbl{font-size:12px;color:var(--muted);line-height:1.4}
 
-/* ─── Menu card ─── */
 .menu-card{
   background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
   padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-sm);
-  transition:.2s;
 }
-.menu-card:hover{box-shadow:var(--shadow-md)}
-.menu-head{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:10px;margin-bottom:14px;flex-wrap:wrap;
-}
+.menu-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
 .menu-head-title{font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
-.menu-head-price{
-  font-weight:800;font-size:18px;color:var(--primary-dark);
-  letter-spacing:-0.02em;
-}
-.menu-head-price small{font-size:12px;font-weight:500;color:var(--muted);margin-right:4px}
-.menu-day{
-  font-size:11.5px;color:var(--muted);text-transform:uppercase;
-  letter-spacing:.06em;margin:12px 0 6px;font-weight:700;
-}
+.menu-head-price{font-weight:800;font-size:18px;color:var(--primary-dark);letter-spacing:-0.02em;display:flex;align-items:baseline;gap:4px}
+.menu-head-price small{font-size:12px;font-weight:500;color:var(--muted)}
+.menu-day{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px;font-weight:700}
 .menu-item{
   display:flex;justify-content:space-between;align-items:center;gap:10px;
   padding:8px 0;font-size:14px;border-bottom:1px dashed var(--border);
@@ -195,11 +159,10 @@ input[type=range]::-moz-range-thumb{
 .menu-item .item-left{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
 .menu-item .type-tag{
   font-size:10.5px;font-weight:600;color:var(--muted);
-  background:#f1f5f9;padding:3px 8px;border-radius:6px;text-transform:uppercase;
-  letter-spacing:.04em;white-space:nowrap;
+  background:#f1f5f9;padding:3px 8px;border-radius:6px;
+  text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;
 }
 .menu-item .dish-name{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.menu-item .price{white-space:nowrap;color:var(--muted);font-size:13px;font-weight:500}
 .btn-shopping{
   margin-top:12px;width:100%;padding:10px;
   border:1.5px dashed var(--primary);background:var(--primary-soft);
@@ -208,16 +171,13 @@ input[type=range]::-moz-range-thumb{
 }
 .btn-shopping:hover{background:#c6f6d5}
 
-/* ─── Dish cards ─── */
 .cat-header{
   display:flex;align-items:center;gap:8px;
   font-size:13px;font-weight:700;color:var(--text-soft);
   margin:24px 0 10px;text-transform:uppercase;letter-spacing:.05em;
 }
-.cat-header .count{
-  background:#f1f5f9;color:var(--muted);padding:2px 8px;
-  border-radius:99px;font-size:11px;font-weight:600;
-}
+.cat-header .count{background:#f1f5f9;color:var(--muted);padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600}
+
 .dish{
   display:flex;align-items:center;gap:13px;
   padding:12px 14px;background:#fff;
@@ -234,66 +194,54 @@ input[type=range]::-moz-range-thumb{
 }
 .dish-body{flex:1;min-width:0}
 .dish-name{font-weight:600;font-size:14.5px;margin-bottom:3px;letter-spacing:-0.01em}
-.dish-meta{
-  color:var(--muted);font-size:12px;line-height:1.4;
-  display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-}
-.dish-meta span{display:inline-flex;align-items:center;gap:3px}
-.dish-price{
-  font-weight:800;font-size:15px;white-space:nowrap;
-  color:var(--primary-dark);letter-spacing:-0.01em;
-}
+.dish-meta{color:var(--muted);font-size:12px;line-height:1.4;display:flex;gap:10px;flex-wrap:wrap}
+.dish-price{font-weight:800;font-size:15px;white-space:nowrap;color:var(--primary-dark);letter-spacing:-0.01em}
 
-/* ─── Empty ─── */
-.empty{
-  text-align:center;padding:44px 24px;color:var(--muted);
-  background:#fff;border-radius:var(--radius);border:1.5px dashed var(--border);
-  font-size:14px;line-height:1.6;
-}
+.empty{text-align:center;padding:44px 24px;color:var(--muted);background:#fff;border-radius:var(--radius);border:1.5px dashed var(--border);font-size:14px;line-height:1.6}
 .empty .emoji{font-size:36px;display:block;margin-bottom:10px}
 
-/* ─── Footer ─── */
+/* Footer */
 .footer{
   position:fixed;left:0;right:0;bottom:0;
-  background:rgba(255,255,255,.92);backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
+  background:rgba(255,255,255,.93);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
   border-top:1px solid var(--border);
   padding:14px 20px calc(14px + env(safe-area-inset-bottom));
   z-index:50;
+}
+@media(max-width:640px){
+  .footer{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}
 }
 .footer-inner{max-width:860px;margin:0 auto;display:flex;gap:10px}
 .btn-primary{
   flex:1;padding:14px;border:none;border-radius:12px;
   background:linear-gradient(135deg,var(--primary),var(--primary-dark));
   color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;
-  transition:.18s;box-shadow:0 4px 14px -4px rgba(22,163,74,.45);
-  letter-spacing:-0.01em;
+  transition:.18s;box-shadow:0 4px 14px -4px rgba(22,163,74,.45);letter-spacing:-0.01em;
 }
 .btn-primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px -4px rgba(22,163,74,.55)}
 .btn-primary:disabled{background:#cbd5e1;box-shadow:none;cursor:not-allowed;transform:none}
 .btn-ghost{
-  padding:14px 20px;border-radius:12px;
-  border:1.5px solid var(--border);background:#fff;
-  font:inherit;font-size:15px;font-weight:600;cursor:pointer;
-  color:var(--text-soft);transition:.15s;
+  padding:14px 20px;border-radius:12px;border:1.5px solid var(--border);background:#fff;
+  font:inherit;font-size:15px;font-weight:600;cursor:pointer;color:var(--text-soft);transition:.15s;
 }
 .btn-ghost:hover:not(:disabled){border-color:#d4d2ce}
 .btn-ghost:disabled{opacity:.4;cursor:not-allowed}
 
-/* ─── Modal ─── */
+/* Modal — с фиксом скролла на мобилках */
 .modal-backdrop{
   position:fixed;inset:0;z-index:100;
   background:rgba(15,23,42,.45);
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   display:flex;align-items:flex-end;justify-content:center;
-  padding:0;opacity:0;pointer-events:none;transition:opacity .25s;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+  height:100vh; height:100dvh;
 }
 .modal-backdrop.show{opacity:1;pointer-events:auto}
-@media(min-width:640px){
-  .modal-backdrop{align-items:center;padding:24px}
-}
+@media(min-width:640px){.modal-backdrop{align-items:center;padding:24px}}
 .modal{
-  background:#fff;width:100%;max-width:640px;max-height:92vh;
+  background:#fff;width:100%;max-width:640px;
+  max-height:90vh; max-height:90dvh;
   border-radius:24px 24px 0 0;overflow:hidden;
   display:flex;flex-direction:column;
   transform:translateY(24px) scale(.98);opacity:0;
@@ -305,7 +253,8 @@ input[type=range]::-moz-range-thumb{
 .modal-close{
   position:absolute;top:14px;right:14px;z-index:2;
   width:36px;height:36px;border-radius:50%;border:none;
-  background:rgba(255,255,255,.9);backdrop-filter:blur(8px);
+  background:rgba(255,255,255,.9);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   font-size:20px;line-height:1;cursor:pointer;
   display:grid;place-items:center;color:var(--text-soft);
   box-shadow:var(--shadow-sm);transition:.15s;
@@ -319,6 +268,7 @@ input[type=range]::-moz-range-thumb{
   padding:28px 24px 22px;
   display:flex;align-items:center;gap:16px;
   border-bottom:1px solid var(--border);
+  flex-shrink:0;
 }
 .modal-hero-emoji{
   width:70px;height:70px;flex:0 0 auto;border-radius:20px;
@@ -326,44 +276,34 @@ input[type=range]::-moz-range-thumb{
   background:#fff;box-shadow:var(--shadow-md);
 }
 .modal-hero-text{flex:1;min-width:0}
-.modal-hero-text h3{
-  margin:0 0 6px;font-size:20px;letter-spacing:-0.02em;
-  color:var(--text);font-weight:800;line-height:1.2;
+.modal-hero-text h3{margin:0 0 6px;font-size:20px;letter-spacing:-0.02em;color:var(--text);font-weight:800;line-height:1.2}
+.modal-hero-tags{display:flex;gap:6px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.modal-hero-tags span{background:rgba(255,255,255,.85);padding:3px 8px;border-radius:6px;font-weight:500;border:1px solid rgba(0,0,0,.04)}
+.modal-body{
+  padding:20px 24px 28px;
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  touch-action:pan-y;
 }
-.modal-hero-tags{
-  display:flex;gap:6px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);
-}
-.modal-hero-tags span{
-  background:rgba(255,255,255,.85);padding:3px 8px;border-radius:6px;
-  font-weight:500;border:1px solid rgba(0,0,0,.04);
-}
-.modal-body{padding:20px 24px 28px;overflow-y:auto;flex:1}
-.modal-stats{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
-  margin-bottom:22px;
-}
-.modal-stat{
-  text-align:center;background:#f8fafc;border-radius:12px;
-  padding:10px 6px;border:1px solid var(--border);
-}
+.modal-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px}
+.modal-stat{text-align:center;background:#f8fafc;border-radius:12px;padding:10px 6px;border:1px solid var(--border)}
 .modal-stat-val{font-weight:700;font-size:15px;color:var(--text);letter-spacing:-0.01em}
 .modal-stat-lbl{font-size:10.5px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
-.modal-section-title{
-  font-size:12px;font-weight:700;color:var(--muted);
-  text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px;
-}
-.modal-ing{
-  list-style:none;padding:0;margin:0 0 24px;
-  background:#fafaf9;border-radius:14px;padding:6px 4px;
-  border:1px solid var(--border);
-}
+.modal-section-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px}
+.modal-ing{list-style:none;padding:0;margin:0 0 24px;background:#fafaf9;border-radius:14px;border:1px solid var(--border);overflow:hidden}
 .modal-ing li{
-  display:flex;justify-content:space-between;gap:10px;
-  padding:9px 14px;font-size:14px;border-bottom:1px dashed var(--border);
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:10px 14px;font-size:14px;border-bottom:1px dashed var(--border);
 }
 .modal-ing li:last-child{border-bottom:none}
-.modal-ing .ing-name{color:var(--text-soft)}
-.modal-ing .ing-amt{color:var(--muted);font-weight:500;white-space:nowrap;font-size:13px}
+.modal-ing .ing-name{color:var(--text-soft);font-weight:500}
+.modal-ing .ing-detail{color:var(--muted);font-size:11.5px;margin-top:2px}
+.modal-ing .ing-right{text-align:right;flex-shrink:0}
+.modal-ing .ing-amt{color:var(--text);font-weight:600;font-size:13.5px}
+.modal-ing .ing-pkg{color:var(--muted);font-size:11px;margin-top:2px}
 .modal-steps{list-style:none;counter-reset:step;padding:0;margin:0}
 .modal-steps li{
   counter-increment:step;position:relative;
@@ -375,34 +315,34 @@ input[type=range]::-moz-range-thumb{
   background:var(--primary-soft);color:var(--primary-dark);
   display:grid;place-items:center;font-size:12.5px;font-weight:700;
 }
-.modal-steps li:not(:last-child)::after{
-  content:'';position:absolute;left:13px;top:30px;bottom:0;
-  width:1px;background:var(--border);
-}
-.modal-ing-title{margin-bottom:10px}
-.shopping-list .modal-ing li{font-size:13.5px}
+.modal-steps li:not(:last-child)::after{content:'';position:absolute;left:13px;top:30px;bottom:0;width:1px;background:var(--border)}
 .shopping-total{
   display:flex;justify-content:space-between;align-items:center;
   margin-top:14px;padding:12px 16px;
   background:var(--primary-soft);border-radius:12px;
   font-weight:700;font-size:15px;color:var(--primary-dark);
 }
+.store-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.store-pill{
+  padding:6px 12px;border-radius:99px;border:1.5px solid var(--border);
+  background:#fff;cursor:pointer;font:inherit;font-size:12.5px;font-weight:500;
+  color:var(--text-soft);transition:.15s;
+}
+.store-pill.active{background:var(--primary);border-color:var(--primary);color:#fff}
 </style>
 </head>
 <body>
 
 <header class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">Рецепты · цены · список покупок</div>
+    <div class="hero-badge">Рецепты · покупки · список</div>
     <h1>Собери меню <em>под себя</em></h1>
-    <p>Выберите магазины, отметьте аллергии и нелюбимые продукты — получите готовые меню с рецептами в рамках бюджета.</p>
+    <p>Выберите магазины и фильтры — получите готовые меню с рецептами и точным списком покупок.</p>
   </div>
 </header>
 
 <div class="app">
-  <div class="progress-wrap">
-    <div class="steps" id="steps"></div>
-  </div>
+  <div class="progress-wrap"><div class="steps" id="steps"></div></div>
   <main id="main"></main>
 </div>
 
@@ -416,68 +356,88 @@ input[type=range]::-moz-range-thumb{
 <div class="modal-backdrop" id="modal" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true">
     <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
-    <div id="modalContent"></div>
+    <div id="modalContent" style="display:flex;flex-direction:column;flex:1 1 auto;min-height:0;"></div>
   </div>
 </div>
 
 <script>
-/* ═════════════ ПРОДУКТЫ (цены Москва, 2024–2025, ₽) ═════════════ */
-/* Заменяемый массив: подставь сюда данные из своего парсера/API */
+/* ═══════════════════════════════════════════════════════════════════
+   ПРОДУКТЫ — упаковки с реальными ценами (Москва 2024–2025)
+   unit: 'kg' | 'L' | 'piece' — базовая мера
+   packSize — сколько в одной упаковке (в базовой мере)
+   packPrice — цена одной упаковки, ₽
+   packLabel — как показать упаковку покупателю
+   ═══════════════════════════════════════════════════════════════════ */
 const PRODUCTS = {
-  chicken_breast:{name:'Куриная грудка', unit:'kg', price:400, allergens:[]},
-  chicken_thigh: {name:'Куриное бедро',  unit:'kg', price:290, allergens:[]},
-  beef:          {name:'Говядина',       unit:'kg', price:650, allergens:[]},
-  pork:          {name:'Свинина',        unit:'kg', price:500, allergens:[]},
-  turkey:        {name:'Индейка',        unit:'kg', price:550, allergens:[]},
-  minced_beef:   {name:'Фарш говяжий',   unit:'kg', price:480, allergens:[]},
-  bacon:         {name:'Бекон',          unit:'kg', price:550, allergens:[]},
-  salmon:  {name:'Лосось',   unit:'kg', price:1300, allergens:['fish']},
-  cod:     {name:'Треска',   unit:'kg', price:550,  allergens:['fish']},
-  shrimp:  {name:'Креветки', unit:'kg', price:1000, allergens:['seafood']},
-  cheese:     {name:'Сыр',              unit:'kg', price:800, allergens:['milk']},
-  mozzarella: {name:'Моцарелла',        unit:'kg', price:850, allergens:['milk']},
-  cottage:    {name:'Творог',           unit:'kg', price:400, allergens:['milk']},
-  milk:       {name:'Молоко',           unit:'L',  price:90,  allergens:['milk']},
-  sour_cream: {name:'Сметана',          unit:'kg', price:300, allergens:['milk']},
-  kefir:      {name:'Кефир',            unit:'L',  price:100, allergens:['milk']},
-  yogurt:     {name:'Йогурт',           unit:'kg', price:270, allergens:['milk']},
-  butter:     {name:'Масло сливочное',  unit:'kg', price:1000,allergens:['milk']},
-  egg:        {name:'Яйца',             unit:'piece', price:14, allergens:['eggs']},
-  pasta:      {name:'Макароны',         unit:'kg', price:130, allergens:['gluten']},
-  rice:       {name:'Рис',              unit:'kg', price:120, allergens:[]},
-  buckwheat:  {name:'Гречка',           unit:'kg', price:100, allergens:[]},
-  oats:       {name:'Овсянка',          unit:'kg', price:110, allergens:['gluten']},
-  flour:      {name:'Мука',             unit:'kg', price:70,  allergens:['gluten']},
-  bread:      {name:'Хлеб',             unit:'piece', price:70, allergens:['gluten']},
-  potato:    {name:'Картофель', unit:'kg', price:55,  allergens:[]},
-  carrot:    {name:'Морковь',   unit:'kg', price:50,  allergens:[]},
-  onion:     {name:'Лук',       unit:'kg', price:45,  allergens:[]},
-  tomato:    {name:'Помидоры',  unit:'kg', price:190, allergens:[]},
-  cucumber:  {name:'Огурцы',    unit:'kg', price:130, allergens:[]},
-  pepper:    {name:'Перец',     unit:'kg', price:230, allergens:[]},
-  cabbage:   {name:'Капуста',   unit:'kg', price:45,  allergens:[]},
-  beet:      {name:'Свёкла',    unit:'kg', price:55,  allergens:[]},
-  mushrooms: {name:'Шампиньоны',unit:'kg', price:270, allergens:[]},
-  greens:    {name:'Зелень',    unit:'kg', price:450, allergens:[]},
-  garlic:    {name:'Чеснок',    unit:'kg', price:280, allergens:[]},
-  apple:     {name:'Яблоки',    unit:'kg', price:120, allergens:[]},
-  banana:    {name:'Бананы',    unit:'kg', price:130, allergens:[]},
-  lemon:     {name:'Лимон',     unit:'kg', price:170, allergens:[]},
-  oil_sun:   {name:'Масло растительное', unit:'L', price:160, allergens:[]},
-  oil_olive: {name:'Масло оливковое',    unit:'L', price:900, allergens:[]},
-  salt:         {name:'Соль',              unit:'kg', price:30,  allergens:[]},
-  pepper_black: {name:'Перец чёрный',      unit:'kg', price:900, allergens:[]},
-  tomato_paste: {name:'Томатная паста',    unit:'kg', price:260, allergens:[]},
-  sugar:        {name:'Сахар',             unit:'kg', price:85,  allergens:[]},
-  honey:        {name:'Мёд',               unit:'kg', price:900, allergens:[]},
-  walnuts:      {name:'Грецкие орехи',     unit:'kg', price:900, allergens:['nuts']},
-  beans_can:    {name:'Фасоль консерв.',   unit:'piece', price:110, allergens:[]},
-  peas_can:     {name:'Горошек зелёный',   unit:'piece', price:95,  allergens:[]},
-  olives_can:   {name:'Оливки',            unit:'piece', price:180, allergens:[]},
-  peas_dry:     {name:'Горох сушёный',     unit:'kg', price:90, allergens:[]},
+  // Мясо (весовое/упаковка ~1 кг)
+  chicken_breast:{name:'Куриная грудка',    unit:'kg', packSize:1,    packPrice:400,  packLabel:'1 кг',    allergens:[]},
+  chicken_thigh: {name:'Куриное бедро',     unit:'kg', packSize:1,    packPrice:290,  packLabel:'1 кг',    allergens:[]},
+  beef:          {name:'Говядина (лопатка)',unit:'kg', packSize:1,    packPrice:650,  packLabel:'1 кг',    allergens:[]},
+  pork:          {name:'Свинина (шея)',     unit:'kg', packSize:1,    packPrice:500,  packLabel:'1 кг',    allergens:[]},
+  turkey:        {name:'Индейка (филе)',    unit:'kg', packSize:1,    packPrice:550,  packLabel:'1 кг',    allergens:[]},
+  minced_beef:   {name:'Фарш говяжий',      unit:'kg', packSize:1,    packPrice:480,  packLabel:'1 кг',    allergens:[]},
+  bacon:         {name:'Бекон',             unit:'kg', packSize:0.2,  packPrice:110,  packLabel:'200 г',   allergens:[]},
+
+  // Рыба
+  salmon:  {name:'Лосось',   unit:'kg', packSize:1,   packPrice:1300, packLabel:'1 кг',   allergens:['fish']},
+  cod:     {name:'Треска',   unit:'kg', packSize:1,   packPrice:550,  packLabel:'1 кг',   allergens:['fish']},
+  shrimp:  {name:'Креветки', unit:'kg', packSize:0.5, packPrice:500,  packLabel:'500 г',  allergens:['seafood']},
+
+  // Яйца — ДЕСЯТОК как в магазине
+  egg:           {name:'Яйца С1',         unit:'piece', packSize:10,   packPrice:119,  packLabel:'десяток', allergens:['eggs']},
+
+  // Молочные — стандартные упаковки
+  milk:          {name:'Молоко 2.5%',     unit:'L', packSize:1,    packPrice:90,   packLabel:'1 л',     allergens:['milk']},
+  kefir:         {name:'Кефир',           unit:'L', packSize:1,    packPrice:100,  packLabel:'1 л',     allergens:['milk']},
+  cheese:        {name:'Сыр',             unit:'kg',packSize:0.2,  packPrice:160,  packLabel:'200 г',   allergens:['milk']},
+  mozzarella:    {name:'Моцарелла',       unit:'kg',packSize:0.2,  packPrice:170,  packLabel:'200 г',   allergens:['milk']},
+  cottage:       {name:'Творог 5%',       unit:'kg',packSize:0.2,  packPrice:80,   packLabel:'200 г',   allergens:['milk']},
+  sour_cream:    {name:'Сметана 15%',     unit:'kg',packSize:0.2,  packPrice:60,   packLabel:'200 г',   allergens:['milk']},
+  yogurt:        {name:'Йогурт натур.',   unit:'kg',packSize:0.3,  packPrice:80,   packLabel:'300 г',   allergens:['milk']},
+  butter:        {name:'Масло сливочное', unit:'kg',packSize:0.18, packPrice:180,  packLabel:'180 г',   allergens:['milk']},
+
+  // Крупы — реальные упаковки
+  pasta:         {name:'Макароны',  unit:'kg', packSize:0.4, packPrice:100, packLabel:'400 г', allergens:['gluten']},
+  rice:          {name:'Рис',       unit:'kg', packSize:0.9, packPrice:120, packLabel:'900 г', allergens:[]},
+  buckwheat:     {name:'Гречка',    unit:'kg', packSize:0.9, packPrice:100, packLabel:'900 г', allergens:[]},
+  oats:          {name:'Овсянка',   unit:'kg', packSize:0.4, packPrice:60,  packLabel:'400 г', allergens:['gluten']},
+  flour:         {name:'Мука',      unit:'kg', packSize:2,   packPrice:120, packLabel:'2 кг',  allergens:['gluten']},
+  bread:         {name:'Хлеб',      unit:'piece',packSize:1, packPrice:70,  packLabel:'буханка',allergens:['gluten']},
+
+  // Овощи
+  potato:    {name:'Картофель',   unit:'kg', packSize:1,   packPrice:55,  packLabel:'1 кг',   allergens:[]},
+  carrot:    {name:'Морковь',     unit:'kg', packSize:1,   packPrice:50,  packLabel:'1 кг',   allergens:[]},
+  onion:     {name:'Лук',         unit:'kg', packSize:1,   packPrice:45,  packLabel:'1 кг',   allergens:[]},
+  tomato:    {name:'Помидоры',    unit:'kg', packSize:1,   packPrice:190, packLabel:'1 кг',   allergens:[]},
+  cucumber:  {name:'Огурцы',      unit:'kg', packSize:1,   packPrice:130, packLabel:'1 кг',   allergens:[]},
+  pepper:    {name:'Перец болг.', unit:'kg', packSize:1,   packPrice:230, packLabel:'1 кг',   allergens:[]},
+  cabbage:   {name:'Капуста',     unit:'kg', packSize:1,   packPrice:45,  packLabel:'1 кг',   allergens:[]},
+  beet:      {name:'Свёкла',      unit:'kg', packSize:1,   packPrice:55,  packLabel:'1 кг',   allergens:[]},
+  mushrooms: {name:'Шампиньоны',  unit:'kg', packSize:0.5, packPrice:135, packLabel:'500 г',  allergens:[]},
+  greens:    {name:'Зелень',      unit:'kg', packSize:0.1, packPrice:45,  packLabel:'пучок',  allergens:[]},
+  garlic:    {name:'Чеснок',      unit:'kg', packSize:0.1, packPrice:30,  packLabel:'головка',allergens:[]},
+
+  // Фрукты
+  apple:     {name:'Яблоки', unit:'kg', packSize:1,   packPrice:120, packLabel:'1 кг',   allergens:[]},
+  banana:    {name:'Бананы', unit:'kg', packSize:1,   packPrice:130, packLabel:'1 кг',   allergens:[]},
+  lemon:     {name:'Лимон',  unit:'kg', packSize:0.5, packPrice:85,  packLabel:'500 г',  allergens:[]},
+
+  // Прочее
+  oil_sun:      {name:'Масло растит.',    unit:'L', packSize:1,    packPrice:160, packLabel:'1 л',    allergens:[]},
+  oil_olive:    {name:'Масло оливковое',  unit:'L', packSize:0.5,  packPrice:450, packLabel:'500 мл', allergens:[]},
+  salt:         {name:'Соль',             unit:'kg',packSize:1,    packPrice:30,  packLabel:'1 кг',   allergens:[]},
+  pepper_black: {name:'Перец чёрный',     unit:'kg',packSize:0.05, packPrice:45,  packLabel:'50 г',   allergens:[]},
+  tomato_paste: {name:'Томатная паста',   unit:'kg',packSize:0.2,  packPrice:55,  packLabel:'200 г',  allergens:[]},
+  sugar:        {name:'Сахар',            unit:'kg',packSize:1,    packPrice:85,  packLabel:'1 кг',   allergens:[]},
+  honey:        {name:'Мёд',              unit:'kg',packSize:0.5,  packPrice:450, packLabel:'500 г',  allergens:[]},
+  walnuts:      {name:'Грецкие орехи',    unit:'kg',packSize:0.2,  packPrice:180, packLabel:'200 г',  allergens:['nuts']},
+  beans_can:    {name:'Фасоль консерв.',  unit:'piece',packSize:1, packPrice:110, packLabel:'банка', allergens:[]},
+  peas_can:     {name:'Горошек зелёный',  unit:'piece',packSize:1, packPrice:95,  packLabel:'банка', allergens:[]},
+  olives_can:   {name:'Оливки',           unit:'piece',packSize:1, packPrice:180, packLabel:'банка', allergens:[]},
+  peas_dry:     {name:'Горох сушёный',    unit:'kg',packSize:0.5,  packPrice:45,  packLabel:'500 г',  allergens:[]},
 };
 
-/* ═════════════ МАГАЗИНЫ (ценовой коэффициент) ═════════════ */
+/* Магазины с коэффициентами */
 const STORES = [
   {id:'auchan',      name:'Ашан',        emoji:'🛒', mult:0.90},
   {id:'pyaterochka', name:'Пятёрочка',   emoji:'🟢', mult:1.00},
@@ -488,9 +448,11 @@ const STORES = [
   {id:'dixy',        name:'Дикси',       emoji:'🟡', mult:0.93},
 ];
 
-/* ═════════════ РЕЦЕПТЫ (с полными инструкциями) ═════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   РЕЦЕПТЫ — ингредиенты в базовой мере (граммы / штуки)
+   ═══════════════════════════════════════════════════════════════════ */
 const RECIPES = [
-  /* ───── ЗАВТРАКИ ───── */
+  /* ЗАВТРАКИ */
   {id:'oat_banana', name:'Овсянка с бананом', emoji:'🥣', cat:'breakfast',
     time:15, servings:1, kcal:320, difficulty:'легко',
     ing:[{p:'oats',g:60},{p:'milk',g:200},{p:'banana',g:100},{p:'honey',g:15},{p:'salt',g:1}],
@@ -527,7 +489,13 @@ const RECIPES = [
     steps:['Выложите творог в миску.','Нарежьте яблоко кубиками, добавьте к творогу.','Полейте мёдом, аккуратно перемешайте.'],
     allergens:['milk'], tags:['veg']},
 
-  /* ───── СУПЫ ───── */
+  {id:'fried_eggs', name:'Яичница-глазунья', emoji:'🍳', cat:'breakfast',
+    time:5, servings:1, kcal:220, difficulty:'легко',
+    ing:[{p:'egg',g:2},{p:'oil_sun',g:10},{p:'salt',g:1}],
+    steps:['Разогрейте масло на сковороде.','Аккуратно разбейте яйца.','Готовьте 2–3 минуты под крышкой.','Посолите перед подачей.'],
+    allergens:['eggs'], tags:['veg']},
+
+  /* СУПЫ */
   {id:'borsch', name:'Борщ', emoji:'🍲', cat:'soup',
     time:90, servings:4, kcal:280, difficulty:'средне',
     ing:[{p:'beef',g:400},{p:'beet',g:200},{p:'cabbage',g:200},{p:'potato',g:300},{p:'carrot',g:100},{p:'onion',g:100},{p:'tomato_paste',g:40},{p:'oil_sun',g:20},{p:'salt',g:5},{p:'greens',g:20}],
@@ -570,7 +538,7 @@ const RECIPES = [
     steps:['Отварите картофель и яйца, остудите и нарежьте кубиками.','Нарежьте огурцы мелким кубиком, порубите зелень.','Смешайте все ингредиенты, залейте кефиром.','Посолите, охладите перед подачей 15 минут.'],
     allergens:['milk','eggs'], tags:['veg']},
 
-  /* ───── ГОРЯЧЕЕ ───── */
+  /* ГОРЯЧЕЕ */
   {id:'grilled_breast', name:'Куриная грудка на гриле', emoji:'🍗', cat:'main',
     time:20, servings:1, kcal:280, difficulty:'легко',
     ing:[{p:'chicken_breast',g:200},{p:'oil_olive',g:10},{p:'salt',g:2},{p:'pepper_black',g:1}],
@@ -649,7 +617,13 @@ const RECIPES = [
     steps:['Обжарьте курицу кусочками до золотистой корочки.','Добавьте лук и карри, готовьте 2 минуты.','Влейте сметану и немного воды, тушите 15 минут.','Подавайте с отварным рисом.'],
     allergens:['milk'], tags:['chicken','meat','spicy']},
 
-  /* ───── САЛАТЫ ───── */
+  {id:'rice_veg', name:'Рис с овощами', emoji:'🍚', cat:'main',
+    time:25, servings:2, kcal:290, difficulty:'легко',
+    ing:[{p:'rice',g:200},{p:'carrot',g:150},{p:'pepper',g:150},{p:'onion',g:100},{p:'oil_sun',g:20},{p:'salt',g:3}],
+    steps:['Отварите рис до готовности.','Обжарьте нарезанные овощи на масле 10 минут.','Смешайте с рисом, посолите, прогрейте 2 минуты.'],
+    allergens:[], tags:['veg']},
+
+  /* САЛАТЫ */
   {id:'greek', name:'Салат греческий', emoji:'🥗', cat:'salad',
     time:10, servings:2, kcal:180, difficulty:'легко',
     ing:[{p:'cucumber',g:200},{p:'tomato',g:200},{p:'pepper',g:100},{p:'mozzarella',g:100},{p:'olives_can',g:1},{p:'oil_olive',g:15},{p:'salt',g:2}],
@@ -681,7 +655,7 @@ const RECIPES = [
     allergens:[], tags:['veg']},
 ];
 
-/* ═════════════ ФИЛЬТРЫ ═════════════ */
+/* Справочники фильтров */
 const ALLERGENS = [
   {id:'nuts',name:'Орехи'},{id:'milk',name:'Молоко'},{id:'gluten',name:'Глютен'},
   {id:'eggs',name:'Яйца'},{id:'soy',name:'Соя'},{id:'fish',name:'Рыба'},{id:'seafood',name:'Морепродукты'},
@@ -692,7 +666,9 @@ const EXCLUDES = [
   {id:'spicy',name:'Острое'},{id:'mushrooms',name:'Грибы'},{id:'veg',name:'Только вегетарианское'},
 ];
 
-/* ═════════════ СОСТОЯНИЕ ═════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   СОСТОЯНИЕ И УТИЛИТЫ
+   ═══════════════════════════════════════════════════════════════════ */
 const state = {
   step:0, stores:[], allergies:[], exclude:[],
   budget:5000, days:3,
@@ -704,38 +680,73 @@ const toggle = (arr,v) => { const i=arr.indexOf(v); i===-1?arr.push(v):arr.splic
 const nameOf = (list,id) => (list.find(x=>x.id===id)||{}).name || id;
 const pick = arr => arr[Math.floor(Math.random()*arr.length)];
 
-/* Форматирование количества продукта */
-function fmtAmount(prod, g) {
-  if (prod.unit === 'piece') return Math.round(g) + ' шт';
-  if (prod.unit === 'L' && g < 1000) return g + ' мл';
-  return g >= 1000 ? (g/1000).toFixed(1).replace('.0','') + ' кг' : g + ' г';
+/* Сколько упаковок надо купить */
+function packsNeeded(prod, qty) {
+  if (prod.unit === 'piece') return Math.ceil(qty / prod.packSize);
+  return Math.ceil(qty / (prod.packSize * 1000));
 }
 
-/* ═════════════ ЦЕНЫ ═════════════ */
-function recipePrice(recipe, storeId) {
-  const mult = (STORES.find(s=>s.id===storeId)||{mult:1}).mult;
-  let total = 0;
-  for (const ing of recipe.ing) {
-    const prod = PRODUCTS[ing.p]; if (!prod) continue;
-    if (prod.unit === 'piece') total += ing.g * prod.price;
-    else total += (ing.g/1000) * prod.price;
-  }
-  return Math.round(total * mult / 10) * 10;
+/* Стоимость покупки одного ингредиента для блюда (с учётом магазина) */
+function ingPurchase(ing, mult) {
+  const p = PRODUCTS[ing.p];
+  const packs = packsNeeded(p, ing.g);
+  return {packs, unitPrice: p.packPrice * mult, total: packs * p.packPrice * mult, p};
 }
-function cheapestPrice(recipe) {
+
+/* Стоимость одной порции рецепта по «пропорции» — только для фильтра */
+function dishPortionCost(recipe) {
   if (!state.stores.length) return 0;
-  return Math.min(...state.stores.map(sid => recipePrice(recipe, sid)));
+  const mult = (STORES.find(s => s.id === state.stores[0]) || {mult:1}).mult;
+  let sum = 0;
+  for (const ing of recipe.ing) {
+    const p = PRODUCTS[ing.p];
+    const ratio = ing.g / (p.unit === 'piece' ? p.packSize : p.packSize * 1000);
+    sum += ratio * p.packPrice * mult;
+  }
+  return sum;
 }
 
-/* ═════════════ ФИЛЬТРАЦИЯ ═════════════ */
+/* Агрегированный список покупок для плана по конкретному магазину */
+function planShoppingList(plan, storeId) {
+  const mult = (STORES.find(s => s.id === storeId) || {mult:1}).mult;
+  const agg = {};
+  for (const day of plan) for (const item of day)
+    for (const ing of item.dish.ing)
+      agg[ing.p] = (agg[ing.p] || 0) + ing.g;
+
+  let total = 0;
+  const items = [];
+  for (const [pid, qty] of Object.entries(agg)) {
+    const p = PRODUCTS[pid];
+    const packs = packsNeeded(p, qty);
+    const cost = packs * p.packPrice * mult;
+    total += cost;
+    items.push({pid, p, qty, packs, cost});
+  }
+  items.sort((a,b) => b.cost - a.cost);
+  return {total, items, mult};
+}
+
+/* Самый дешёвый вариант по выбранным магазинам */
+function cheapestPlan(plan) {
+  if (!state.stores.length) return {total:0, storeId:null, items:[]};
+  let best = null;
+  for (const sid of state.stores) {
+    const r = planShoppingList(plan, sid);
+    if (!best || r.total < best.total) { r.storeId = sid; best = r; }
+  }
+  return best;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ФИЛЬТРАЦИЯ И ГЕНЕРАЦИЯ МЕНЮ
+   ═══════════════════════════════════════════════════════════════════ */
 function filterRecipes() {
   return RECIPES
     .filter(r => !r.allergens.some(a => state.allergies.includes(a)))
-    .filter(r => !r.tags.some(t => state.exclude.includes(t)))
-    .map(r => ({...r, price: cheapestPrice(r)}));
+    .filter(r => !r.tags.some(t => state.exclude.includes(t)));
 }
 
-/* ═════════════ СБОРКА МЕНЮ ═════════════ */
 function buildSamples(valid, days, budget, count=4) {
   const byCat = {
     breakfast: valid.filter(r=>r.cat==='breakfast'),
@@ -747,34 +758,36 @@ function buildSamples(valid, days, budget, count=4) {
 
   const results = [];
   const seen = new Set();
-  for (let i = 0; i < 6000 && results.length < count; i++) {
-    const plan = []; let total = 0;
+  const tries = 3000;
+  for (let i = 0; i < tries && results.length < count; i++) {
+    const plan = [];
     for (let d = 0; d < days; d++) {
-      const day = [
+      plan.push([
         {type:'Завтрак', dish: pick(byCat.breakfast)},
         {type:'Суп',     dish: pick(byCat.soup)},
         {type:'Горячее', dish: pick(byCat.main)},
         {type:'Салат',   dish: pick(byCat.salad)},
-      ];
-      plan.push(day);
-      for (const x of day) total += x.dish.price;
+      ]);
     }
-    if (total > budget || total < budget * 0.5) continue;
     const key = plan.flatMap(d => d.map(x => x.dish.id)).sort().join('|');
     if (seen.has(key)) continue;
     seen.add(key);
-    results.push({plan, total});
+
+    const cost = cheapestPlan(plan);
+    if (cost.total > budget || cost.total < budget * 0.30) continue;
+    results.push({plan, total: cost.total, storeId: cost.storeId});
   }
   return results;
 }
 
-/* ═════════════ РЕНДЕР ШАГОВ ═════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   РЕНДЕР
+   ═══════════════════════════════════════════════════════════════════ */
 const STEPS_RENDER = [renderStores, renderAllergies, renderExcludes, renderBudget];
-const STEP_LABELS = ['Магазины', 'Аллергии', 'Исключения', 'Бюджет'];
+const STEP_LABELS = ['Магазины','Аллергии','Исключения','Бюджет'];
 
 function renderStepIndicator() {
-  const el = document.getElementById('steps');
-  el.innerHTML = STEP_LABELS.map((label, i) => {
+  document.getElementById('steps').innerHTML = STEP_LABELS.map((label, i) => {
     const cls = i === state.step ? 'active' : (i < state.step ? 'done' : '');
     const num = i < state.step ? '✓' : String(i+1);
     return `<div class="step-dot ${cls}"><span class="step-num">${num}</span>${label}</div>`;
@@ -785,25 +798,24 @@ function renderStores() {
   const all = state.stores.length === STORES.length;
   return `
     <h2>Где закупаемся?</h2>
-    <p class="hint">Выберите один или несколько магазинов. Цена блюда считается по ингредиентам — берём самую выгодную среди ваших магазинов.</p>
+    <p class="hint">Выберите магазины. Список покупок будет посчитан по самому выгодному из них.</p>
     <div class="grid">
       ${STORES.map(s => {
         const on = state.stores.includes(s.id);
         return `<button class="option ${on?'active':''}" data-act="store" data-val="${s.id}">
-          <span class="emoji">${s.emoji}</span>
-          <span class="name">${s.name}</span>
+          <span class="emoji">${s.emoji}</span><span class="name">${s.name}</span>
           <span class="check">${on?'✓':''}</span>
         </button>`;
       }).join('')}
     </div>
-    <button class="link" data-act="allstores">${all ? 'Снять выбор' : 'Выбрать все'}</button>
+    <button class="link" data-act="allstores">${all?'Снять выбор':'Выбрать все'}</button>
   `;
 }
 
 function renderAllergies() {
   return `
     <h2>Есть аллергии?</h2>
-    <p class="hint">Блюда с этими аллергенами исключим полностью. Нет аллергий — жмите «Далее».</p>
+    <p class="hint">Блюда с этими аллергенами исключим полностью.</p>
     <div class="chips">
       ${ALLERGENS.map(a => `<button class="chip ${state.allergies.includes(a.id)?'active':''}" data-act="allergy" data-val="${a.id}">${a.name}</button>`).join('')}
     </div>
@@ -821,10 +833,10 @@ function renderExcludes() {
 }
 
 function renderBudget() {
-  const quick = [1000, 3000, 5000, 10000, 25000];
+  const quick = [1000,3000,5000,10000,25000];
   return `
     <h2>Бюджет и длина плана</h2>
-    <p class="hint">Сумма — на весь план. В день 4 блюда: завтрак, суп, горячее, салат.</p>
+    <p class="hint">Сумма — на весь план. Цены считаются по упаковкам, как в реальном магазине.</p>
     <div class="budget-card">
       <div class="budget-value" id="budgetValue">${state.budget} <small>₽</small></div>
       <input type="range" id="budgetRange" min="1000" max="25000" step="500" value="${state.budget}">
@@ -862,7 +874,6 @@ function renderResults() {
     `;
   }
 
-  // кэшируем сэмплы
   const key = [state.stores.join(','), state.allergies.join(','), state.exclude.join(','), state.budget, state.days].join('#');
   if (key !== state.sampleKey) {
     state.samples = buildSamples(valid, state.days, state.budget, 4);
@@ -877,44 +888,37 @@ function renderResults() {
     <div class="summary">${chips.join('<br>')}</div>
 
     <div class="stats">
-      <div class="stat">
-        <div class="stat-val">${perDay.toLocaleString('ru-RU')}</div>
-        <div class="stat-lbl">комбинаций на 1 день</div>
-      </div>
-      <div class="stat">
-        <div class="stat-val big">${totalCombos.toLocaleString('ru-RU')}</div>
-        <div class="stat-lbl">комбинаций на план · ${state.days} дн.</div>
-      </div>
-      <div class="stat">
-        <div class="stat-val">${valid.length}</div>
-        <div class="stat-lbl">блюд после фильтров</div>
-      </div>
+      <div class="stat"><div class="stat-val">${perDay.toLocaleString('ru-RU')}</div><div class="stat-lbl">комбинаций на 1 день</div></div>
+      <div class="stat"><div class="stat-val big">${totalCombos.toLocaleString('ru-RU')}</div><div class="stat-lbl">комбинаций на весь план</div></div>
+      <div class="stat"><div class="stat-val">${valid.length}</div><div class="stat-lbl">блюд после фильтров</div></div>
     </div>
 
-    <h3>🍽 Примеры меню · нажмите на блюдо для рецепта</h3>
+    <h3>🍽 Примеры меню · нажмите для рецепта</h3>
     ${state.samples.length ? state.samples.map((s, idx) => renderSample(s, idx)).join('')
-      : `<div class="empty"><span class="emoji">💸</span>В этот бюджет примеры не помещаются. Увеличьте бюджет или сократите план.</div>`}
+      : `<div class="empty"><span class="emoji">💸</span>В этот бюджет примеры меню не помещаются. Увеличьте бюджет или сократите план.</div>`}
 
     <h3>📖 Все доступные блюда</h3>
     ${['breakfast','soup','main','salad'].map(cat => {
       const label = {breakfast:'Завтраки', soup:'Супы', main:'Горячее', salad:'Салаты'}[cat];
-      const list = byCat[cat].slice().sort((a,b)=>a.price-b.price);
+      const list = byCat[cat];
       if (!list.length) return '';
       return `
         <div class="cat-header">${label}<span class="count">${list.length}</span></div>
-        ${list.map(d => renderDishCard(d)).join('')}
+        ${list.map(renderDishCard).join('')}
       `;
     }).join('')}
   `;
 }
 
 function renderSample(sample, idx) {
+  const storeName = sample.storeId ? nameOf(STORES, sample.storeId) : '';
   return `
     <div class="menu-card">
       <div class="menu-head">
         <div class="menu-head-title">Вариант ${idx+1} · ${state.days} ${state.days===1?'день':state.days<5?'дня':'дней'}</div>
-        <div class="menu-head-price"><small>итого</small>${money(sample.total)}</div>
+        <div class="menu-head-price"><small>покупки</small>${money(sample.total)}</div>
       </div>
+      ${state.days > 1 ? '' : ''}
       ${sample.plan.map((day, i) => `
         ${state.days > 1 ? `<div class="menu-day">День ${i+1}</div>` : ''}
         ${day.map(x => `
@@ -923,12 +927,11 @@ function renderSample(sample, idx) {
               <span class="type-tag">${x.type}</span>
               <span class="dish-name">${x.dish.emoji} ${x.dish.name}</span>
             </div>
-            <span class="price">${money(x.dish.price)}</span>
           </div>
         `).join('')}
       `).join('')}
       <button class="btn-shopping" data-act="openShopping" data-val="${idx}">
-        🧾 Список покупок
+        🧾 Список покупок · ${storeName} · ${money(sample.total)}
       </button>
     </div>
   `;
@@ -946,26 +949,39 @@ function renderDishCard(d) {
           <span>🔥 ${d.kcal} ккал</span>
         </div>
       </div>
-      <div class="dish-price">${money(d.price)}</div>
     </div>
   `;
 }
 
-/* ═════════════ МОДАЛКА ═════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   МОДАЛКИ
+   ═══════════════════════════════════════════════════════════════════ */
 const modal = document.getElementById('modal');
 const modalContent = document.getElementById('modalContent');
 const modalClose = document.getElementById('modalClose');
+
+function lockScroll(lock) {
+  if (lock) {
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+  } else {
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+  }
+}
 
 function openModal(html) {
   modalContent.innerHTML = html;
   modal.classList.add('show');
   modal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+  lockScroll(true);
 }
 function closeModal() {
   modal.classList.remove('show');
   modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  lockScroll(false);
   setTimeout(() => { if (!modal.classList.contains('show')) modalContent.innerHTML = ''; }, 300);
 }
 modalClose.addEventListener('click', closeModal);
@@ -975,11 +991,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.clas
 function openRecipe(id) {
   const dish = RECIPES.find(r => r.id === id);
   if (!dish) return;
-  const price = cheapestPrice(dish);
-  const stores = state.stores.map(sid => ({
-    name: nameOf(STORES, sid),
-    price: recipePrice(dish, sid),
-  })).sort((a,b)=>a.price-b.price);
+
+  // Считаем покупки для этого блюда в самом дешёвом из выбранных магазинов
+  const mockPlan = [[{type:'X', dish}]];
+  const cost = cheapestPlan(mockPlan);
+  const mult = cost.mult || 1;
 
   const html = `
     <div class="modal-hero">
@@ -987,9 +1003,8 @@ function openRecipe(id) {
       <div class="modal-hero-text">
         <h3>${dish.name}</h3>
         <div class="modal-hero-tags">
-          <span>${money(price)}</span>
+          <span>${cost.total > 0 ? money(cost.total) + ' за продукты' : dish.difficulty}</span>
           <span>${dish.difficulty}</span>
-          <span>${state.stores.length ? 'в ' + (stores.length>1?'магазинах':stores[0].name.toLowerCase()) : 'выберите магазин'}</span>
         </div>
       </div>
     </div>
@@ -1001,11 +1016,23 @@ function openRecipe(id) {
         <div class="modal-stat"><div class="modal-stat-val">${dish.ing.length}</div><div class="modal-stat-lbl">ингр.</div></div>
       </div>
 
-      <p class="modal-section-title modal-ing-title">Ингредиенты · ${dish.servings} ${dish.servings===1?'порция':dish.servings<5?'порции':'порций'}</p>
+      <p class="modal-section-title">Что купить (упаковки)</p>
       <ul class="modal-ing">
-        ${dish.ing.map(i => {
-          const p = PRODUCTS[i.p];
-          return `<li><span class="ing-name">${p.name}</span><span class="ing-amt">${fmtAmount(p, i.g)}</span></li>`;
+        ${dish.ing.map(ing => {
+          const info = ingPurchase(ing, mult);
+          const needLabel = info.p.unit === 'piece'
+            ? `${ing.g} шт`
+            : (ing.g >= 1000 ? (ing.g/1000).toFixed(2).replace(/\.?0+$/,'') + ' кг' : ing.g + ' г');
+          return `<li>
+            <div>
+              <div class="ing-name">${info.p.name}</div>
+              <div class="ing-detail">нужно ${needLabel}</div>
+            </div>
+            <div class="ing-right">
+              <div class="ing-amt">${money(info.total)}</div>
+              <div class="ing-pkg">${info.packs} × ${info.p.packLabel}</div>
+            </div>
+          </li>`;
         }).join('')}
       </ul>
 
@@ -1013,13 +1040,6 @@ function openRecipe(id) {
       <ol class="modal-steps">
         ${dish.steps.map(s => `<li>${s}</li>`).join('')}
       </ol>
-
-      ${stores.length > 1 ? `
-        <p class="modal-section-title" style="margin-top:20px">Цена по магазинам</p>
-        <ul class="modal-ing">
-          ${stores.map(s => `<li><span class="ing-name">${s.name}</span><span class="ing-amt">${money(s.price)}</span></li>`).join('')}
-        </ul>
-      ` : ''}
     </div>
   `;
   openModal(html);
@@ -1028,29 +1048,37 @@ function openRecipe(id) {
 function openShoppingList(sampleIdx) {
   const sample = state.samples[sampleIdx];
   if (!sample) return;
-  const agg = {};
-  for (const day of sample.plan) {
-    for (const item of day) {
-      for (const ing of item.dish.ing) {
-        agg[ing.p] = (agg[ing.p] || 0) + ing.g;
-      }
-    }
-  }
-  const entries = Object.entries(agg).sort((a,b) => a[0].localeCompare(b[0]));
 
-  // стоимость по самому дешёвому магазину
-  let total = 0;
-  const store = state.stores.map(sid => ({
-    name: nameOf(STORES, sid),
-    price: entries.reduce((sum, [pid, g]) => {
-      const p = PRODUCTS[pid];
-      const mult = (STORES.find(s => s.id === sid) || {mult:1}).mult;
-      const base = p.unit === 'piece' ? g * p.price : (g/1000) * p.price;
-      return sum + base * mult;
-    }, 0),
-  })).sort((a,b) => a.price - b.price)[0];
+  const storeIds = state.stores.length ? state.stores : [STORES[0].id];
+  let currentStore = sample.storeId || storeIds[0];
 
-  if (store) total = store.price;
+  const render = () => {
+    const data = planShoppingList(sample.plan, currentStore);
+    const itemsHtml = data.items.map(it => `
+      <li>
+        <div>
+          <div class="ing-name">${it.p.name}</div>
+          <div class="ing-detail">${it.qty >= 1000 && it.p.unit !== 'piece'
+            ? 'нужно ' + (it.qty/1000).toFixed(2).replace(/\.?0+$/,'') + ' кг'
+            : (it.p.unit === 'piece' ? 'нужно ' + it.qty + ' шт' : 'нужно ' + it.qty + ' г')}</div>
+        </div>
+        <div class="ing-right">
+          <div class="ing-amt">${money(it.cost)}</div>
+          <div class="ing-pkg">${it.packs} × ${it.p.packLabel}</div>
+        </div>
+      </li>
+    `).join('');
+
+    document.getElementById('shopping-inner').innerHTML = `
+      ${storeIds.length > 1 ? `
+        <div class="store-pills">
+          ${storeIds.map(sid => `<button class="store-pill ${sid===currentStore?'active':''}" data-act="pickStore" data-val="${sid}">${nameOf(STORES,sid)}</button>`).join('')}
+        </div>
+      ` : ''}
+      <ul class="modal-ing">${itemsHtml}</ul>
+      <div class="shopping-total"><span>Итого в кассе</span><span>${money(data.total)}</span></div>
+    `;
+  };
 
   const html = `
     <div class="modal-hero">
@@ -1059,29 +1087,33 @@ function openShoppingList(sampleIdx) {
         <h3>Список покупок</h3>
         <div class="modal-hero-tags">
           <span>${state.days} ${state.days===1?'день':state.days<5?'дня':'дней'}</span>
-          <span>${entries.length} позиций</span>
-          ${store ? `<span>${store.name}</span>` : ''}
+          <span>план меню</span>
         </div>
       </div>
     </div>
-    <div class="modal-body shopping-list">
-      <ul class="modal-ing">
-        ${entries.map(([pid, g]) => {
-          const p = PRODUCTS[pid];
-          return `<li><span class="ing-name">${p.name}</span><span class="ing-amt">${fmtAmount(p, g)}</span></li>`;
-        }).join('')}
-      </ul>
-      ${store ? `<div class="shopping-total"><span>Примерно</span><span>${money(total)}</span></div>` : ''}
+    <div class="modal-body">
+      <div id="shopping-inner"></div>
     </div>
   `;
+
   openModal(html);
+  render();
+
+  // Обработчик переключения магазина внутри модалки
+  modalContent.querySelector('.modal-body').addEventListener('click', e => {
+    const btn = e.target.closest('[data-act="pickStore"]');
+    if (!btn) return;
+    currentStore = btn.dataset.val;
+    render();
+  });
 }
 
-/* ═════════════ НАВИГАЦИЯ ═════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   НАВИГАЦИЯ
+   ═══════════════════════════════════════════════════════════════════ */
 const main = document.getElementById('main');
 const backBtn = document.getElementById('back');
 const nextBtn = document.getElementById('next');
-
 const canGoNext = () => state.step === 0 ? state.stores.length > 0 : true;
 
 function render() {
@@ -1120,8 +1152,8 @@ main.addEventListener('click', e => {
   if (act === 'budget')    { state.budget = +val; render(); }
   if (act === 'days')      { state.days = +val; render(); }
   if (act === 'allstores') { state.stores = state.stores.length === STORES.length ? [] : STORES.map(s => s.id); render(); }
-  if (act === 'openRecipe')    openRecipe(val);
-  if (act === 'openShopping')  openShoppingList(+val);
+  if (act === 'openRecipe')   openRecipe(val);
+  if (act === 'openShopping') openShoppingList(+val);
 });
 
 main.addEventListener('input', e => {
